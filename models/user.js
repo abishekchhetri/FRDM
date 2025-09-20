@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
-
+const crypto = require("crypto");
 const userSchema = mongoose.Schema(
   {
     name: {
@@ -40,6 +40,14 @@ const userSchema = mongoose.Schema(
       type: "Date",
       default: Date.now(),
     },
+    passwordReset: {
+      type: "String",
+      default: undefined,
+    },
+    passwordResetTimeout: {
+      type: "Date",
+      default: undefined,
+    },
     role: {
       type: "String",
       default: "user",
@@ -66,6 +74,14 @@ userSchema.methods.checkPassword = async function (password) {
 
 userSchema.methods.isPasswordChanged = function () {
   return new Date(this.passwordCreatedAt).getTime() > Date.now();
+};
+
+//FORGOT PASSWORD TOKEN GENERATION
+userSchema.methods.generateToken = function () {
+  const token = crypto.randomBytes(32).toString("hex");
+  this.passwordReset = crypto.createHash("sha256").update(token).digest("hex");
+  this.passwordResetTimeout = Date.now() + 10 * 60 * 1000;
+  return token;
 };
 
 const User = mongoose.model("user", userSchema);

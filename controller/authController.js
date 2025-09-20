@@ -3,6 +3,8 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 const AppError = require("../utils/appError");
 const { promisify } = require("util");
+const Email = require("../utils/email");
+const crypto = require("crypto");
 //signup, login, protect, restrict, forgot/reset password and all such feature
 
 const signToken = (userId) => {
@@ -68,6 +70,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   next();
 });
 
+//middleware function so we can let specific roles to access these roles
 exports.restrictTo =
   (...roles) =>
   (req, res, next) => {
@@ -75,3 +78,59 @@ exports.restrictTo =
       return next(new AppError("user restricted to access this route"));
     next();
   };
+
+//now reset and forgot password
+exports.forgotPassword = catchAsync(async (req, res, next) => {
+  const { email } = req.body;
+  if (!email) return next(new AppError("email field is empty!"));
+  const [user] = await User.find({ email });
+  if (!user)
+    return next(new AppError("cannot find user associated with this email"));
+
+  try {
+    const token = user.generateToken();
+    user.save({ validateBeforeSave: false }); //saving the token to the db this way
+    const resetLink = `${req.protocol}://${req.get(
+      "host"
+    )}/api/v1/user/resetPassword/${token}`;
+
+    await new Email(user, resetLink).sendMessage(
+      "This is password reset link if you have not initiated password reset please ignore this email here is the password reset token " +
+        resetLink,
+      "password reset link"
+    );
+    res.status(200).json({
+      status: "success",
+      message: "password reset was just sent to user!",
+    });
+  } catch (err) {
+    user.passwordReset = undefined;
+    user.passwordResetTimeout = undefined;
+    await user.save({ validateBeforeSave: false });
+    return next(new AppError("cannot generate password reset link!"));
+  }
+});
+
+exports.resetPassword = catchAsync(async (req, res, next) => {
+  const { resetToken } = req.params;
+  if (!resetToken)
+    return next(new AppError("cannot reset password invalid token"));
+  const hashedToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+
+  const [user] = await User.find({
+    passwordReset: hashedToken,
+    passwordResetTimeout: { $gte: Date.now() },
+  });
+
+  if (!user)
+    return next(new AppError("password reset is expired or not valid"));
+
+  user.passwordReset = undefined;
+  user.passwordResetTimeout = undefined;
+  await user.save({ validateBeforeSave: false });
+
+  createSendToken(res, user);
+});
