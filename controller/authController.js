@@ -5,7 +5,6 @@ const AppError = require("../utils/appError");
 const { promisify } = require("util");
 const Email = require("../utils/email");
 const crypto = require("crypto");
-//signup, login, protect, restrict, forgot/reset password and all such feature
 
 const signToken = (userId) => {
   return jwt.sign({ id: userId }, process.env.JWT_SECRET, {
@@ -112,6 +111,11 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 });
 
 exports.resetPassword = catchAsync(async (req, res, next) => {
+  const { password, passwordConfirm, email } = req.body;
+
+  if (!password && !passwordConfirm && !email)
+    return next(new AppError("cannot reset password fields are required!"));
+
   const { resetToken } = req.params;
   if (!resetToken)
     return next(new AppError("cannot reset password invalid token"));
@@ -125,12 +129,18 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
     passwordResetTimeout: { $gte: Date.now() },
   });
 
-  if (!user)
+  if (!user) {
+    user.passwordReset = undefined;
+    user.passwordResetTimeout = undefined;
     return next(new AppError("password reset is expired or not valid"));
+  }
 
   user.passwordReset = undefined;
   user.passwordResetTimeout = undefined;
-  await user.save({ validateBeforeSave: false });
+  user.password = password;
+  user.passwordConfirm = passwordConfirm;
+  user.passwordChangeDate();
+  await user.save();
 
   createSendToken(res, user);
 });

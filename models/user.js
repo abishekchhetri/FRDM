@@ -36,9 +36,9 @@ const userSchema = mongoose.Schema(
         "password dont match!",
       ],
     },
-    passwordCreatedAt: {
+    passwordChangedAt: {
       type: "Date",
-      default: Date.now(),
+      default: undefined,
     },
     passwordReset: {
       type: "String",
@@ -73,7 +73,7 @@ userSchema.methods.checkPassword = async function (password) {
 };
 
 userSchema.methods.isPasswordChanged = function () {
-  return new Date(this.passwordCreatedAt).getTime() > Date.now();
+  return new Date(this.paswordChangedAt).getTime() > Date.now();
 };
 
 //FORGOT PASSWORD TOKEN GENERATION
@@ -84,5 +84,8 @@ userSchema.methods.generateToken = function () {
   return token;
 };
 
+userSchema.methods.passwordChangeDate = function () {
+  this.passwordChangedAt = Date.now() - 1000;
+};
 const User = mongoose.model("user", userSchema);
 module.exports = User;
