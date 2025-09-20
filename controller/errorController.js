@@ -21,8 +21,14 @@ const sendErrorProd = (res, err) => {
   }
 };
 
-const errorHandler = (err, req, res, next) => {
+const errorHandler = (error, req, res, next) => {
   //add mongoose apperror here and then send to err = smth
+  let err = {};
+  err.status = error.status || "error";
+  err.statusCode = error.statusCode || 500;
+  err.message = error.message || "Something went wrong";
+  err.stack = error.stack || null;
+
   if (process.env.NODE_ENV === "development") sendErrorDev(res, err);
   else sendErrorProd(res, err);
 };
