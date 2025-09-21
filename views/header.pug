@@ -7,10 +7,7 @@ nav.navbar
     span Food Recipe & Diet Management
   // Actions (Both States Shown)
   .actions
-    // Logged-out state
-    .auth-logged-out
-      a.btn(href="/login") Login
-      a.btn(href="/signup") Signup
+    
     // Logged-in state
     if(user)
       .auth-logged-in
@@ -19,5 +16,10 @@ nav.navbar
             alt="User Photo" 
             src="/images/user.png"
             )
-        span.username John Doe
+        span.username=user.name
         a.btn.logout-btn(href="/logout") Logout
+    else 
+      // Logged-out state
+      .auth-logged-out
+        a.btn(href="/login") Login
+        a.btn(href="/signup") Signup

@@ -3,12 +3,9 @@ const Blog = require("../models/blog");
 
 exports.getReviewOfBlog = catchAsync(async (req, res, next) => {
   const blog = await Blog.find();
-  console.log(req.user);
-
   res.status(200).render("frontpageLanding", {
     title: "overview",
     blogs: blog,
-    user: req.user,
   });
 });
 

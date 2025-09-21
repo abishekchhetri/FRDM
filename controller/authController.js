@@ -14,6 +14,13 @@ const signToken = (userId) => {
 
 const createSendToken = (res, user) => {
   const token = signToken(user.id);
+
+  res.cookie("jwt", token, {
+    maxAge: process.env.COOKIE_EXPIRY * 24 * 60 * 60 * 1000,
+    httpOnly: true,
+    secure: true,
+  });
+
   res.status(200).json({
     status: "success",
     token,
@@ -48,10 +55,16 @@ exports.login = catchAsync(async (req, res, next) => {
 });
 
 exports.protect = catchAsync(async (req, res, next) => {
-  const { authorization } = req.headers;
-  if (!authorization)
-    return next(new AppError("login to hit this route!", 401));
-  let token = authorization.split(" ")[1];
+  //***FOR BEARER TOKEN */
+  // const { authorization } = req.headers;
+  // if (!authorization)
+  //   return next(new AppError("login to hit this route!", 401));
+  // let token = authorization.split(" ")[1];
+
+  //**FOR COOKIES */
+  let token;
+  if (req.cookies) token = req.cookies.jwt;
+  else return next(new AppError("login to hit this route"));
   token = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
   if (!token) return next(new AppError("token invalid"));
   //jwt checks if token is expired
@@ -60,19 +73,19 @@ exports.protect = catchAsync(async (req, res, next) => {
   const user = await User.findById(token.id);
 
   //checking if password was changed
-  if (!user.isPasswordChanged(token.iat)) console.log("okay!!");
+  if (!user.isPasswordChanged(token.iat)) console.log("jwt is valid!");
   else
     return next(
       new AppError("you have changed password since you logged in!", 401)
     );
   req.user = user;
+  res.locals.user = req.user;
   next();
 });
 
 exports.isLoggedIn = catchAsync(async (req, res, next) => {
-  const { authorization } = req.headers;
-  if (!authorization) return next();
-  let token = authorization.split(" ")[1];
+  if (!req.cookies.jwt) return next();
+  let token = req.cookies.jwt;
   token = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
   if (!token) return next();
   //jwt checks if token is expired
@@ -81,9 +94,9 @@ exports.isLoggedIn = catchAsync(async (req, res, next) => {
   const user = await User.findById(token.id);
 
   //checking if password was changed
-  if (!user.isPasswordChanged(token.iat)) console.log("okay!!");
-  else return next();
+  if (user.isPasswordChanged(token.iat)) return next();
   req.user = user;
+  res.locals.user = req.user;
   next();
 });
 //middleware function so we can let specific roles to access these roles
@@ -157,4 +170,13 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   await user.save();
 
   createSendToken(res, user);
+});
+
+//LOGOUT
+exports.logout = catchAsync(async (req, res, next) => {
+  if (req.cookies.jwt) res.cookie("jwt", "", { maxAge: 100 });
+  res.status(200).json({
+    status: "success",
+    message: "successfully logged out!",
+  });
 });

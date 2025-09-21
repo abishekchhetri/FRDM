@@ -716,22 +716,44 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 },{}],"f2QDv":[function(require,module,exports,__globalThis) {
 var _loginJs = require("./login.js");
 const loginBtn = document.getElementById("loginBtn");
-loginBtn.addEventListener("click", (e)=>{
-    alert("hello");
-    console.log("hello");
+const logoutBth = document.querySelector(".logout-btn");
+if (loginBtn) loginBtn.addEventListener("click", (e)=>{
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    //login operation here
+    (0, _loginJs.login)({
+        email,
+        password
+    });
+});
+if (logoutBth) logoutBth.addEventListener("click", ()=>{
+    (0, _loginJs.logout)();
 });
 
 },{"./login.js":"7yHem"}],"7yHem":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "login", ()=>login);
+parcelHelpers.export(exports, "logout", ()=>logout);
 var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
 const login = async (obj)=>{
     try {
-        const val = await (0, _axiosDefault.default).post(`127.0.0.1:3000/api/v1/user/login`, obj);
-        console.log(val);
+        const val = await (0, _axiosDefault.default).post(`/api/v1/user/login`, obj);
+        alert("successfully logged in!");
+        location.assign("/all");
     } catch (err) {
+        alert(err.response.data.message);
+        console.log(err);
+    }
+};
+const logout = async ()=>{
+    try {
+        await (0, _axiosDefault.default).post(`/api/v1/user/logout`);
+        location.assign("/all");
+        alert("logged out!");
+    } catch (err) {
+        alert(err.response.data.message);
         console.log(err);
     }
 };

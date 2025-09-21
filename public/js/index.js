@@ -1,7 +1,18 @@
-import { login } from "./login.js";
+import { login, logout } from "./login.js";
 const loginBtn = document.getElementById("loginBtn");
+const logoutBth = document.querySelector(".logout-btn");
 
-loginBtn.addEventListener("click", (e) => {
-  alert("hello");
-  console.log("hello");
-});
+if (loginBtn) {
+  loginBtn.addEventListener("click", (e) => {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    //login operation here
+    login({ email, password });
+  });
+}
+
+if (logoutBth) {
+  logoutBth.addEventListener("click", () => {
+    logout();
+  });
+}
