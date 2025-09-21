@@ -13,6 +13,7 @@ exports.getAllBlog = catchAsync(async (req, res, next) => {
 });
 
 exports.postBlog = catchAsync(async (req, res, next) => {
+  req.body.uploadedBy = req.user.name;
   const blogs = await Blog.create(req.body);
   res.status(201).json({
     status: "success",
@@ -25,15 +26,15 @@ exports.deleteBlog = catchAsync(async (req, res, next) => {
   res.status(204).json({});
 });
 
-exports.findSpecificTour = catchAsync(async (req, res, next) => {
-  const blogs = await Blog.findById(req.params.id);
+exports.findSpecificBlog = catchAsync(async (req, res, next) => {
+  const blogs = await Blog.findById(req.params.id).populate("comments");
   res.status(200).json({
     status: "success",
     blogs,
   });
 });
 
-exports.updateSpecificTour = catchAsync(async (req, res, next) => {
+exports.updateSpecificBlog = catchAsync(async (req, res, next) => {
   const blogs = await Blog.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
   });

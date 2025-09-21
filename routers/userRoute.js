@@ -9,6 +9,8 @@ router.route("/forgotPassword").post(authHandler.forgotPassword);
 router.route("/resetPassword/:resetToken").patch(authHandler.resetPassword);
 
 router.use(authHandler.protect);
+router.route("/me").get(userHandler.whoami);
+router.route("/comments").get(userHandler.user);
 router.route("/").get(userHandler.getAllUsers);
 router.route("/:id").get(userHandler.deleteUser);
 module.exports = router;

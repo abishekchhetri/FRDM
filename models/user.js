@@ -59,6 +59,12 @@ const userSchema = mongoose.Schema(
   }
 );
 
+userSchema.virtual("comments", {
+  ref: "comment",
+  foreignField: "user",
+  localField: "_id",
+});
+
 //password encrypting before creating password in presave mongoose web hook
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
@@ -72,8 +78,8 @@ userSchema.methods.checkPassword = async function (password) {
   return isCorrect;
 };
 
-userSchema.methods.isPasswordChanged = function () {
-  return new Date(this.paswordChangedAt).getTime() > Date.now();
+userSchema.methods.isPasswordChanged = function (iat) {
+  return new Date(this.paswordChangedAt).getTime() > iat;
 };
 
 //FORGOT PASSWORD TOKEN GENERATION

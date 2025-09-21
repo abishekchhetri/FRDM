@@ -1,0 +1,407 @@
+/* Reset & Font */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: #f9f9f9;
+  color: #333;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: #4caf50;
+  color: #fff;
+}
+
+.navbar .logo-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.navbar img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+/* General Button Style */
+.btn {
+  display: inline-block;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+/* Logged-out state buttons */
+.auth-logged-out .btn {
+  background: #fff;
+  color: #4caf50;
+  margin-left: 0.5rem;
+}
+
+.auth-logged-out .btn:hover {
+  background: #f0f0f0;
+}
+
+/* Logged-in state */
+.auth-logged-in {
+  display: flex; /* shown by default so both states appear */
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: 1rem;
+}
+
+.user-photo {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #fff;
+}
+
+.username {
+  font-weight: 600;
+  color: #fff;
+}
+
+.logout-btn {
+  background: #fff;
+  color: #4caf50;
+}
+
+.logout-btn:hover {
+  background: #f0f0f0;
+}
+
+/* Blog section */
+.content {
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.blog-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.blog-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.blog-content {
+  padding: 1rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.blog-date {
+  font-size: 0.85rem;
+  color: #777;
+  margin-bottom: 0.3rem;
+}
+
+.blog-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.read-more {
+  background: #4caf50;
+  color: #fff;
+  padding: 0.4rem 0.8rem;
+}
+
+.read-more:hover {
+  background: #45a049;
+}
+
+.user-link {
+  display: flex;
+  align-items: center;
+}
+
+.user-photo {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #fff;
+  transition: transform 0.2s ease;
+}
+
+.user-photo:hover {
+  transform: scale(1.05);
+}
+
+/* Mobile adjustments */
+@media (max-width: 600px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  .actions {
+    align-self: flex-end;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+/*Blogs and comments*/
+.blog-container {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.blog-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.blog-image {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.blog-content {
+  padding: 1.5rem;
+}
+
+.blog-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.blog-meta {
+  font-size: 0.9rem;
+  color: #777;
+  margin-bottom: 1rem;
+}
+
+.blog-description {
+  line-height: 1.6;
+}
+
+/* Comments Section */
+.comments-section {
+  background: #fff;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.comments-section h3 {
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.comment {
+  display: flex;
+  gap: 0.8rem;
+  border-bottom: 1px solid #eee;
+  padding: 0.8rem 0;
+}
+
+.comment:last-child {
+  border-bottom: none;
+}
+
+.comment-photo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #4caf50;
+}
+
+.comment-body {
+  flex: 1;
+}
+
+.comment-user {
+  font-weight: 600;
+  margin-right: 0.3rem;
+}
+
+.comment-text {
+  margin-top: 0.2rem;
+  line-height: 1.4;
+}
+
+/* Comment Form */
+.comment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.comment-form textarea {
+  padding: 0.7rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  resize: vertical;
+  font-family: "Poppins", sans-serif;
+}
+
+.submit-comment {
+  align-self: flex-end;
+  background: #4caf50;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.submit-comment:hover {
+  background: #45a049;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .blog-image {
+    height: 200px;
+  }
+  .comment {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* LOGIN FORM  */
+/* Container */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  padding: 1rem;
+  background: #f5f5f5;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Card */
+.login-card {
+  background: #fff;
+  padding: 2rem 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Heading */
+.login-card h2 {
+  text-align: center;
+  color: #4caf50;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+/* Labels and inputs */
+.login-card label {
+  font-weight: 500;
+  margin-top: 1rem;
+  display: block;
+}
+
+.login-card input {
+  width: 100%;
+  padding: 0.8rem;
+  margin-top: 0.3rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.login-card input:focus {
+  outline: none;
+  border-color: #4caf50;
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+/* Button */
+.login-card .btn {
+  width: 100%;
+  margin-top: 1.5rem;
+  background-color: #4caf50;
+  color: #fff;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.login-card .btn:hover {
+  background-color: #45a049;
+}
+
+/* Signup text */
+.signup-text {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.signup-text a {
+  color: #4caf50;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.signup-text a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+  .login-card {
+    padding: 1.5rem 1.8rem;
+  }
+  .login-card h2 {
+    font-size: 1.5rem;
+  }
+  .login-card input,
+  .login-card .btn {
+    font-size: 0.9rem;
+  }
+}

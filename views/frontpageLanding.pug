@@ -1,0 +1,15 @@
+extends base
+block content
+  section.content
+    each blog in blogs
+      .blog-card
+        img(
+          alt="Blog Image" 
+          src=`/images/${blog.photo}`
+          )
+        .blog-content
+          .blog-date=`${new Date(blog.createdAt).toISOString().substring(0, 10)}`
+          .blog-uploaded by #{blog.uploadedBy}
+          .blog-title #{blog.title}
+          a.btn.read-more(href=`/blog/${blog.slug}`) Read More
+    

@@ -60,7 +60,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   const user = await User.findById(token.id);
 
   //checking if password was changed
-  if (!user.isPasswordChanged()) console.log("okay!!");
+  if (!user.isPasswordChanged(token.iat)) console.log("okay!!");
   else
     return next(
       new AppError("you have changed password since you logged in!", 401)
@@ -69,6 +69,23 @@ exports.protect = catchAsync(async (req, res, next) => {
   next();
 });
 
+exports.isLoggedIn = catchAsync(async (req, res, next) => {
+  const { authorization } = req.headers;
+  if (!authorization) return next();
+  let token = authorization.split(" ")[1];
+  token = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+  if (!token) return next();
+  //jwt checks if token is expired
+
+  //checking if the user exists associated token
+  const user = await User.findById(token.id);
+
+  //checking if password was changed
+  if (!user.isPasswordChanged(token.iat)) console.log("okay!!");
+  else return next();
+  req.user = user;
+  next();
+});
 //middleware function so we can let specific roles to access these roles
 exports.restrictTo =
   (...roles) =>
@@ -88,7 +105,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 
   try {
     const token = user.generateToken();
-    user.save({ validateBeforeSave: false }); //saving the token to the db this way
+    await user.save({ validateBeforeSave: false }); //saving the token to the db this way
     const resetLink = `${req.protocol}://${req.get(
       "host"
     )}/api/v1/user/resetPassword/${token}`;
@@ -129,11 +146,8 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
     passwordResetTimeout: { $gte: Date.now() },
   });
 
-  if (!user) {
-    user.passwordReset = undefined;
-    user.passwordResetTimeout = undefined;
+  if (!user)
     return next(new AppError("password reset is expired or not valid"));
-  }
 
   user.passwordReset = undefined;
   user.passwordResetTimeout = undefined;

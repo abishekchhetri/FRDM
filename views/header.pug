@@ -1,0 +1,23 @@
+nav.navbar
+  .logo-title
+    img(
+      alt="Logo" 
+      src="/images/grape.png"
+      )
+    span Food Recipe & Diet Management
+  // Actions (Both States Shown)
+  .actions
+    // Logged-out state
+    .auth-logged-out
+      a.btn(href="/login") Login
+      a.btn(href="/signup") Signup
+    // Logged-in state
+    if(user)
+      .auth-logged-in
+        a.user-link(href="/profile")
+          img.user-photo(
+            alt="User Photo" 
+            src="/images/user.png"
+            )
+        span.username John Doe
+        a.btn.logout-btn(href="/logout") Logout

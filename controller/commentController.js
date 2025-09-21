@@ -1,0 +1,64 @@
+const Comment = require("../models/comment");
+const User = require("../models/user");
+const AppError = require("../utils/appError");
+const catchAsync = require("../utils/catchAsync");
+
+exports.showAllComments = catchAsync(async (req, res, next) => {
+  const comments = await Comment.find();
+  if (!comments || comments.length < 1)
+    return next(new AppError("cannot load comments it is empty", 500));
+  res.status(200).json({
+    status: "success",
+    comments,
+  });
+});
+
+exports.postComment = catchAsync(async (req, res, next) => {
+  const { userId, blogId } = req.params;
+  if (!userId && !blogId)
+    return next(
+      new AppError(
+        "cannot post comment userid, blogid or comment missing!",
+        401
+      )
+    );
+  const commentData = await Comment.create({
+    comment: req.body.comment,
+    blog: blogId,
+    user: userId,
+  });
+
+  res.status(201).json({
+    status: "success",
+    commentData,
+  });
+});
+
+exports.showOneComment = catchAsync(async (req, res, next) => {
+  const comment = await Comment.findById(req.params.id);
+  res.status(200).json({
+    status: "success",
+    comment,
+  });
+});
+
+exports.deleteComment = catchAsync(async (req, res, next) => {
+  await Comment.findByIdAndDelete(req.params.id);
+  res.status(200).json({
+    status: "success",
+    message: "comment was deleted!",
+  });
+});
+
+//delete comment of specific user
+exports.deleteCommentOfUser = catchAsync(async (req, res, next) => {
+  const { comment } = req.params;
+  if (!comment) return next(new AppError("specify comment id"));
+
+  if (req.comments.includes(comment))
+    res.status(200).json({
+      status: "success",
+      comments: req.comments,
+    });
+  else return next(new AppError("Cannot delete that comment!"));
+});

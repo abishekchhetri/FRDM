@@ -1,0 +1,15 @@
+extends base
+block content
+  .login-container
+    .login-card
+      h2 Login
+      label(for="email") Email
+      input#email(type="email" placeholder="Enter your email" required)
+      
+      label(for="password") Password
+      input#password(type="password" placeholder="Enter your password" required)
+      
+      button#loginBtn.btn Login
+      p.signup-text
+        | Don't have an account? 
+        a(href="/signup") Signup
