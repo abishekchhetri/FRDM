@@ -5,11 +5,10 @@
   "license": "ISC",
   "author": "Avishek Chhetri",
   "type": "commonjs",
-  "main": "app.js",
   "scripts": {
     "start": "nodemon server.js",
     "start:prod": "nodemon server.js --production",
-    "start:parcel": "parcel watch public/js/index.js --dist-dir public/js",
+    "start:parcel": "parcel watch public/js/index.js --dist-dir public/js/dist",
     "build:parcel": "parcel build public/js/index.js --dist-dir public/js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -27,6 +26,7 @@
     "slugify": "^1.6.6"
   },
   "devDependencies": {
+    "buffer": "^6.0.3",
     "parcel": "^2.16.0"
   }
 }
