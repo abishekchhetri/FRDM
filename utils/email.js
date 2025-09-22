@@ -4,7 +4,7 @@ class Email {
     this.url = url;
     this.firstname = user.name.split(" ")[0];
     this.email = user.email;
-    this.from = "Avishek Chhetri <abiking@gmail.com>";
+    this.from = "Food recipe and diet";
   }
 
   transporter() {
@@ -16,6 +16,16 @@ class Email {
         auth: {
           user: process.env.MT_USERNAME,
           pass: process.env.MT_PASSWORD,
+        },
+      });
+    else
+      return nodemailer.createTransport({
+        host: process.env.G_HOST,
+        port: process.env.G_PORT,
+        // secure: true, // true for 465, false for other ports
+        auth: {
+          user: process.env.G_USERNAME,
+          pass: process.env.G_PASSWORD,
         },
       });
   }
