@@ -1,0 +1,19 @@
+extends base
+block content 
+  .dashboard
+    aside.sidebar
+      //- h2.logo MyApp
+      nav
+        ul
+          li: a(href="/about") About
+          li: a(href="/my-comments") My Comments
+          li: a(href="/post-blog") Post Blog
+          li: a(href="/post-recipe") Post Recipe
+          li: a(href="/users") Users
+          li: a(href="/comments") Comments
+          li: a(href="/approvals") Approvals
+
+    // Main content
+    main.content
+      block mainContent
+        

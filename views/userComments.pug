@@ -1,0 +1,23 @@
+extends sidebar 
+block mainContent
+  .search-container
+    h2 Search User
+    form.search-form
+      input#searchInput(type="text" placeholder="Search user by name or email")
+      button#searchBtn.btn(type="button") Search
+
+    //- // Sample Results
+    //- .search-results
+    //-   .user-card
+    //-     img.user-photo(src="https://via.placeholder.com/50" alt="User Photo")
+    //-     .user-info
+    //-       h3.username Priya Chhetri
+    //-       p.created-at Created at: Sep 20, 2025
+    //-     button.delete-btn(type="button") Delete User
+
+    //-   .user-card
+    //-     img.user-photo(src="https://via.placeholder.com/50" alt="User Photo")
+    //-     .user-info
+    //-       h3.username Sanjay Khadka
+    //-       p.created-at Created at: Sep 18, 2025
+    //-     button.delete-btn(type="button") Delete User

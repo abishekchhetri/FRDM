@@ -1,4 +1,5 @@
 const catchAsync = require("../utils/catchAsync");
+const User = require("../models/user");
 const Blog = require("../models/blog");
 
 exports.getReviewOfBlog = catchAsync(async (req, res, next) => {
@@ -39,5 +40,30 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 exports.resetPassword = catchAsync(async (req, res, next) => {
   res.render("resetPassword", {
     title: "reset-password",
+  });
+});
+
+exports.me = catchAsync(async (req, res, next) => {
+  res.render("landme", {
+    title: "me",
+  });
+});
+
+exports.myComments = catchAsync(async (req, res, next) => {
+  const comments = await User.findById(req.user.id).populate({
+    path: "comments",
+    select: "",
+    options: { sort: { createdAt: -1 } },
+  });
+
+  res.render("comments", {
+    title: "my comments",
+    comments: comments.comments,
+  });
+});
+
+exports.comments = catchAsync(async (req, res, next) => {
+  res.render("userComments", {
+    title: "Admin: comments",
   });
 });

@@ -11,4 +11,7 @@ router.route("/login").get(viewHandler.login);
 router.route("/signup").get(viewHandler.signup);
 router.route("/forgot-password").get(viewHandler.forgotPassword);
 router.route("/resetPassword/:resetToken").get(viewHandler.resetPassword);
+router.route("/profile").get(authHandler.protect, viewHandler.me);
+router.route("/my-comments").get(authHandler.protect, viewHandler.myComments);
+router.route("/comments").get(authHandler.protect, viewHandler.comments);
 module.exports = router;

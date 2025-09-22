@@ -23,10 +23,12 @@ exports.user = catchAsync(async (req, res, next) => {
   const comments = await User.findById(req.user.id).populate({
     path: "comments",
     select: "",
+    options: { sort: { createdAt: -1 } },
   });
 
   res.status(200).json({
     status: "success",
+    results: comments.comments.length,
     comment: comments.comments,
   });
 });
