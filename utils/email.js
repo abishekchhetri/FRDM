@@ -1,3 +1,4 @@
+const pug = require("pug");
 const nodemailer = require("nodemailer");
 class Email {
   constructor(user, url) {
@@ -30,21 +31,39 @@ class Email {
       });
   }
 
-  async sendMail(message, subject) {
-    const mailOptions = {
-      from: this.from,
-      to: this.email,
-      subject: subject,
-      text: message, // plain‑text body
-      // html: "<b>Hello world?</b>", // HTML body only when i use template
-    };
+  async sendMail(template, message, subject) {
+    //compiling html from the pug using renderFile
+    try {
+      const html = pug.renderFile(
+        `${__dirname}/../views/email/${template}.pug`,
+        {
+          url: this.url,
+          firstname: this.firstname,
+          subject: this.subject,
+        }
+      );
 
-    await this.transporter().sendMail(mailOptions);
+      const mailOptions = {
+        from: this.from,
+        to: this.email,
+        subject: subject,
+        text: message, // plain‑text body
+        html, // HTML body only when i use template
+      };
+      await this.transporter().sendMail(mailOptions);
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
   }
 
-  async sendMessage(message, subject) {
-    await this.sendMail(message, subject);
-    console.log("Mail sent! to " + this.email);
+  async sendMessage(template, message, subject) {
+    try {
+      await this.sendMail(template, message, subject);
+      console.log("Mail sent! to " + this.email);
+    } catch (err) {
+      console.log(err);
+    }
   }
 }
 

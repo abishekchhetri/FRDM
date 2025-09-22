@@ -128,8 +128,8 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
     )}/resetPassword/${token}`;
 
     await new Email(user, resetLink).sendMessage(
-      "This is password reset link if you have not initiated password reset please ignore this email here is the password reset token " +
-        resetLink,
+      "forgotPassword",
+      "",
       "password reset link"
     );
     res.status(200).json({
