@@ -1,6 +1,7 @@
 const express = require("express");
 const authHandler = require("../controller/authController");
 const userHandler = require("../controller/userController");
+const viewRoute = require("../routers/viewRoute");
 const router = express.Router();
 
 router.route("/signup").post(authHandler.signup);
@@ -10,6 +11,7 @@ router.route("/forgotPassword").post(authHandler.forgotPassword);
 router.route("/resetPassword/:resetToken").patch(authHandler.resetPassword);
 
 router.use(authHandler.protect);
+
 router.route("/me").get(userHandler.whoami);
 router.route("/comments").get(userHandler.user);
 

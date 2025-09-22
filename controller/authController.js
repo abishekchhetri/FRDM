@@ -62,9 +62,9 @@ exports.protect = catchAsync(async (req, res, next) => {
   // let token = authorization.split(" ")[1];
 
   //**FOR COOKIES */
+  if (!req.cookies.jwt) return next(new AppError("login to hit this route"));
   let token;
-  if (req.cookies) token = req.cookies.jwt;
-  else return next(new AppError("login to hit this route"));
+  token = req.cookies.jwt;
   token = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
   if (!token) return next(new AppError("token invalid"));
   //jwt checks if token is expired
@@ -73,11 +73,12 @@ exports.protect = catchAsync(async (req, res, next) => {
   const user = await User.findById(token.id);
 
   //checking if password was changed
-  if (!user.isPasswordChanged(token.iat)) console.log("jwt is valid!");
-  else
+  if (user.isPasswordChanged(token.iat)) {
+    res.cookie("jwt", "", { maxAge: 100 });
     return next(
       new AppError("you have changed password since you logged in!", 401)
     );
+  }
   req.user = user;
   res.locals.user = req.user;
   next();
@@ -94,7 +95,10 @@ exports.isLoggedIn = catchAsync(async (req, res, next) => {
   const user = await User.findById(token.id);
 
   //checking if password was changed
-  if (user.isPasswordChanged(token.iat)) return next();
+  if (user.isPasswordChanged(token.iat)) {
+    res.cookie("jwt", "", { maxAge: 100 });
+    return next();
+  }
   req.user = user;
   res.locals.user = req.user;
   next();
@@ -121,7 +125,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
     await user.save({ validateBeforeSave: false }); //saving the token to the db this way
     const resetLink = `${req.protocol}://${req.get(
       "host"
-    )}/api/v1/user/resetPassword/${token}`;
+    )}/resetPassword/${token}`;
 
     await new Email(user, resetLink).sendMessage(
       "This is password reset link if you have not initiated password reset please ignore this email here is the password reset token " +
@@ -160,7 +164,9 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   });
 
   if (!user)
-    return next(new AppError("password reset is expired or not valid"));
+    return next(
+      new AppError("this password reset link is expired and not valid")
+    );
 
   user.passwordReset = undefined;
   user.passwordResetTimeout = undefined;

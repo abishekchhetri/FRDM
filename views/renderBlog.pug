@@ -12,19 +12,19 @@ block content
           span.blog-uploaded Uploaded by: #{blog.uploadedBy}
         p.blog-description= blog.description
 
- 
-    .comments-section
-      h3 Comments
+    if(user)
+      .comments-section
+        h3 Comments
 
-      //- Loop comments dynamically
-      each comment in blog.comments
-        .comment
-          img.comment-photo(src=comment.user.photo alt=comment.name)
-          .comment-body
-            span.comment-user= comment.user.name
-            p.comment-text= comment.comment
+        //- Add Comment Form
+        form.comment-form
+          textarea.comment-text(name="comment" placeholder="Add a comment..." rows="3")
+          button.btn.submit-comment(type="submit" data-tour-id=`${blog.id}`) Post Comment
+        //- Loop comments dynamically
+        each comment in blog.comments
+          .comment
+            img.comment-photo(src=comment.user.photo alt=comment.name)
+            .comment-body
+              span.comment-user= comment.user.name
+              p.comment-text= comment.comment
 
-      //- Add Comment Form
-      form.comment-form
-        textarea(name="comment" placeholder="Add a comment..." rows="3")
-        button.btn.submit-comment(type="submit") Post Comment

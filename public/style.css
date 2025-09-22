@@ -405,3 +405,68 @@ body {
     font-size: 0.9rem;
   }
 }
+/* ERROR PUG STYLES  */
+/* Error Page */
+.error-container {
+  min-height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background: #f8f8f8;
+}
+
+.error-card {
+  text-align: center;
+  background: #fff;
+  padding: 40px 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+}
+
+.error-code {
+  font-size: 80px;
+  font-weight: 700;
+  color: #ff4c4c;
+  margin: 0;
+}
+
+.error-message {
+  font-size: 24px;
+  margin: 10px 0;
+  color: #333;
+}
+
+.error-info {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 25px;
+}
+
+.btn.home-btn {
+  display: inline-block;
+  background: #ff4c4c;
+  color: #fff;
+  text-decoration: none;
+  padding: 12px 25px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.btn.home-btn:hover {
+  background: #e03e3e;
+  transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .error-code {
+    font-size: 60px;
+  }
+  .error-message {
+    font-size: 20px;
+  }
+}

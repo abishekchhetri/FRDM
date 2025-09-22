@@ -717,6 +717,9 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 var _loginJs = require("./login.js");
 const loginBtn = document.getElementById("loginBtn");
 const logoutBth = document.querySelector(".logout-btn");
+const submitComment = document.querySelector(".submit-comment");
+const forgotBtn = document.querySelector(".forgotBtn");
+const resetBtn = document.querySelector("#resetPassword");
 if (loginBtn) loginBtn.addEventListener("click", (e)=>{
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
@@ -729,19 +732,48 @@ if (loginBtn) loginBtn.addEventListener("click", (e)=>{
 if (logoutBth) logoutBth.addEventListener("click", ()=>{
     (0, _loginJs.logout)();
 });
+if (submitComment) submitComment.addEventListener("click", (e)=>{
+    e.preventDefault();
+    const tourId = submitComment.getAttribute("data-tour-id");
+    const comment = document.querySelector(".comment-text").value;
+    (0, _loginJs.postComment)(tourId, {
+        comment
+    });
+});
+if (forgotBtn) forgotBtn.addEventListener("click", async (e)=>{
+    e.preventDefault();
+    forgotBtn.textContent = "processing...";
+    const email = document.getElementById("email").value;
+    await (0, _loginJs.forgotPassword)({
+        email
+    });
+});
+if (resetBtn) resetBtn.addEventListener("click", async ()=>{
+    resetBtn.textContent = "resetting...";
+    const password = document.getElementById("new-password").value;
+    const passwordConfirm = document.getElementById("confirm-password").value;
+    const link = window.location.href.split("/").at(-1); //get the token from link
+    await (0, _loginJs.resetPassword)(link, {
+        password,
+        passwordConfirm
+    });
+});
 
 },{"./login.js":"7yHem"}],"7yHem":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "login", ()=>login);
 parcelHelpers.export(exports, "logout", ()=>logout);
+parcelHelpers.export(exports, "postComment", ()=>postComment);
+parcelHelpers.export(exports, "forgotPassword", ()=>forgotPassword);
+parcelHelpers.export(exports, "resetPassword", ()=>resetPassword);
 var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
 const login = async (obj)=>{
     try {
         const val = await (0, _axiosDefault.default).post(`/api/v1/user/login`, obj);
         alert("successfully logged in!");
-        location.assign("/all");
+        location.assign("/");
     } catch (err) {
         alert(err.response.data.message);
         console.log(err);
@@ -750,10 +782,42 @@ const login = async (obj)=>{
 const logout = async ()=>{
     try {
         await (0, _axiosDefault.default).post(`/api/v1/user/logout`);
-        location.assign("/all");
+        location.assign("/");
         alert("logged out!");
     } catch (err) {
         alert(err.response.data.message);
+        console.log(err);
+    }
+};
+const postComment = async (tourId, obj)=>{
+    try {
+        await (0, _axiosDefault.default).post(`/api/v1/comment/${tourId}`, obj);
+        location.reload(true);
+        alert("comment posted!");
+    } catch (err) {
+        alert(err.response.data.message);
+        console.log(err);
+    }
+};
+const forgotPassword = async (email)=>{
+    try {
+        await (0, _axiosDefault.default).post(`/api/v1/user/forgotPassword`, email);
+        alert("reset link has been sent, reset password and login again");
+        location.assign("/");
+    } catch (err) {
+        alert(err.response.data.message);
+        location.reload(true);
+        console.log(err);
+    }
+};
+const resetPassword = async (token, obj)=>{
+    try {
+        await (0, _axiosDefault.default).patch(`/api/v1/user/resetPassword/${token}`, obj);
+        alert("password has been reset!");
+        location.assign("/");
+    } catch (err) {
+        alert(err.response.data.message);
+        location.reload("/");
         console.log(err);
     }
 };

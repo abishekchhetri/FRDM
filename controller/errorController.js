@@ -1,23 +1,47 @@
-const sendErrorDev = (res, err) => {
-  res.status(err.statusCode).json({
-    status: err.status,
-    message: err.message,
-    error: err,
-    stack: err.stack,
-  });
-};
-
-const sendErrorProd = (res, err) => {
-  if (err.isOperational) {
+const sendErrorDev = (req, res, err) => {
+  if (req.originalUrl.includes("api"))
     res.status(err.statusCode).json({
       status: err.status,
       message: err.message,
+      error: err,
+      stack: err.stack,
     });
-  } else {
-    res.status(err.statusCode).json({
+  //render error in browser
+  else
+    res.status(err.statusCode).render("error", {
+      title: "error occured",
       status: err.status,
-      message: "Something went wrong!",
+      message: err.message,
+      error: err,
+      stack: err.stack,
     });
+};
+
+const sendErrorProd = (req, res, err) => {
+  if (req.originalUrl.includes("api")) {
+    if (err.isOperational) {
+      res.status(err.statusCode).json({
+        status: err.status,
+        message: err.message,
+      });
+    } else {
+      res.status(err.statusCode).json({
+        status: err.status,
+        message: "Something went wrong!",
+      });
+    }
+  } else {
+    if (err.isOperational) {
+      res.status(err.statusCode).render("error", {
+        status: err.status,
+        message: err.message,
+      });
+    } else {
+      res.status(err.statusCode).render("error", {
+        status: err.status,
+        message: "Something went wrong!",
+      });
+    }
   }
 };
 
@@ -29,7 +53,7 @@ const errorHandler = (error, req, res, next) => {
   err.message = error.message || "Something went wrong";
   err.stack = error.stack || null;
 
-  if (process.env.NODE_ENV === "development") sendErrorDev(res, err);
-  else sendErrorProd(res, err);
+  if (process.env.NODE_ENV === "development") sendErrorDev(req, res, err);
+  else sendErrorProd(req, res, err);
 };
 module.exports = errorHandler;

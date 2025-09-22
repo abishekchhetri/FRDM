@@ -29,3 +29,15 @@ exports.signup = catchAsync(async (req, res, next) => {
     title: "login",
   });
 });
+
+exports.forgotPassword = catchAsync(async (req, res, next) => {
+  res.render("forgotPassword", {
+    title: "forgot-password",
+  });
+});
+
+exports.resetPassword = catchAsync(async (req, res, next) => {
+  res.render("resetPassword", {
+    title: "reset-password",
+  });
+});

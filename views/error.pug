@@ -1,0 +1,8 @@
+extends base
+block content 
+  .error-container
+    .error-card
+      h1.error-code #{status || 'Error'}
+      h2.error-message #{message || 'Something went wrong!'}
+      p.error-info #{info || 'Please try again or contact support.'}
+      a.btn.home-btn(href="/") Go to Home

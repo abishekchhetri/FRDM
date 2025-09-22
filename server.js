@@ -11,6 +11,22 @@ const db = process.env.DB.replace("<db_password>", process.env.DB_PASSWORD);
 mongoose.connect(db).then(() => console.log("mongodb connected!"));
 
 //server is started
-app.listen(process.env.PORT, () => {
+const server = app.listen(process.env.PORT, () => {
   console.log("server started successfully!");
+});
+
+process.on("uncaughtException", (err) => {
+  server.close(() => {
+    console.log("shutting down server!!");
+    process.exit(1);
+  });
+  console.log(err.status, err.message);
+});
+
+process.on("unhandledRejection", (err) => {
+  server.close(() => {
+    console.log("shutting down server!!");
+    process.exit(1);
+  });
+  console.log(err.status, err.message);
 });

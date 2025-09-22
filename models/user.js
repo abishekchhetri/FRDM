@@ -24,6 +24,7 @@ const userSchema = mongoose.Schema(
     password: {
       type: "String",
       required: [true, "password is required"],
+      min: [8, "password must be minimum 8 digits okay!"],
     },
     passwordConfirm: {
       type: "String",
@@ -79,7 +80,7 @@ userSchema.methods.checkPassword = async function (password) {
 };
 
 userSchema.methods.isPasswordChanged = function (iat) {
-  return new Date(this.paswordChangedAt).getTime() > iat;
+  return new Date(this.passwordChangedAt).getTime() > iat * 1000;
 };
 
 //FORGOT PASSWORD TOKEN GENERATION

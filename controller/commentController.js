@@ -14,7 +14,8 @@ exports.showAllComments = catchAsync(async (req, res, next) => {
 });
 
 exports.postComment = catchAsync(async (req, res, next) => {
-  const { userId, blogId } = req.params;
+  const { blogId } = req.params;
+  const userId = req.user.id;
   if (!userId && !blogId)
     return next(
       new AppError(

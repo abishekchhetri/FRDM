@@ -13,7 +13,7 @@ router
   .route("/delete-user-comment/:comment")
   .delete(userHandler.passCommentsOfUser, commentHandler.deleteCommentOfUser);
 
-router.route("/:blogId/:userId").post(commentHandler.postComment);
+router.route("/:blogId").post(commentHandler.postComment);
 
 router.use(authHandler.restrictTo("admin"));
 router
