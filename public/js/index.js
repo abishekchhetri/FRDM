@@ -7,6 +7,7 @@ import {
   searchUser,
   postaRecipe,
   postaBlog,
+  deleteaComment,
 } from "./login.js";
 const loginBtn = document.getElementById("loginBtn");
 const logoutBth = document.querySelector(".logout-btn");
@@ -16,6 +17,7 @@ const resetBtn = document.querySelector("#resetPassword");
 const searchBtn = document.querySelector("#searchBtn");
 const postBlog = document.querySelector(".postBlog");
 const postRecipe = document.querySelector(".postRecipe");
+const deleteComment = document.querySelector(".comments-section");
 
 if (loginBtn) {
   loginBtn.addEventListener("click", (e) => {
@@ -104,4 +106,11 @@ if (postRecipe)
     };
     await postaRecipe(obj);
     postRecipe.textContent = "Upload";
+  });
+
+if (deleteComment)
+  deleteComment.addEventListener("click", async (e) => {
+    if (!e.target.classList.contains("delete-cmnt")) return;
+    e.target.textContent = "Deleting...";
+    await deleteaComment(e.target.dataset.id);
   });

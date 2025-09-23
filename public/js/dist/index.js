@@ -723,6 +723,7 @@ const resetBtn = document.querySelector("#resetPassword");
 const searchBtn = document.querySelector("#searchBtn");
 const postBlog = document.querySelector(".postBlog");
 const postRecipe = document.querySelector(".postRecipe");
+const deleteComment = document.querySelector(".comments-section");
 if (loginBtn) loginBtn.addEventListener("click", (e)=>{
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
@@ -801,6 +802,11 @@ if (postRecipe) postRecipe.addEventListener("click", async ()=>{
     await (0, _loginJs.postaRecipe)(obj);
     postRecipe.textContent = "Upload";
 });
+if (deleteComment) deleteComment.addEventListener("click", async (e)=>{
+    if (!e.target.classList.contains("delete-cmnt")) return;
+    e.target.textContent = "Deleting...";
+    await (0, _loginJs.deleteaComment)(e.target.dataset.id);
+});
 
 },{"./login.js":"7yHem"}],"7yHem":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -813,6 +819,7 @@ parcelHelpers.export(exports, "resetPassword", ()=>resetPassword);
 parcelHelpers.export(exports, "searchUser", ()=>searchUser);
 parcelHelpers.export(exports, "postaRecipe", ()=>postaRecipe);
 parcelHelpers.export(exports, "postaBlog", ()=>postaBlog);
+parcelHelpers.export(exports, "deleteaComment", ()=>deleteaComment);
 var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
 const login = async (obj)=>{
@@ -891,6 +898,15 @@ const postaBlog = async (obj)=>{
         await (0, _axiosDefault.default).post(`/api/v1/blogs`, obj);
         location.assign("/");
         alert("Blog has been posted successfully!");
+    } catch (err) {
+        alert(err.response.data.message);
+        console.log(err);
+    }
+};
+const deleteaComment = async (id)=>{
+    try {
+        await (0, _axiosDefault.default).delete(`/api/v1/comment/${id}`);
+        location.assign("/my-comments");
     } catch (err) {
         alert(err.response.data.message);
         console.log(err);

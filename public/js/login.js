@@ -88,3 +88,13 @@ export const postaBlog = async (obj) => {
     console.log(err);
   }
 };
+
+export const deleteaComment = async (id) => {
+  try {
+    await axios.delete(`/api/v1/comment/${id}`);
+    location.assign("/my-comments");
+  } catch (err) {
+    alert(err.response.data.message);
+    console.log(err);
+  }
+};
