@@ -66,3 +66,25 @@ export const searchUser = (name) => {
     console.log(err);
   }
 };
+
+export const postaRecipe = async (obj) => {
+  try {
+    await axios.post(`/api/v1/blogs`, obj);
+    location.assign("/");
+    alert("recipe has been posted successfully!");
+  } catch (err) {
+    alert(err.response.data.message);
+    console.log(err);
+  }
+};
+
+export const postaBlog = async (obj) => {
+  try {
+    await axios.post(`/api/v1/blogs`, obj);
+    location.assign("/");
+    alert("Blog has been posted successfully!");
+  } catch (err) {
+    alert(err.response.data.message);
+    console.log(err);
+  }
+};

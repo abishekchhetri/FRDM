@@ -721,6 +721,8 @@ const submitComment = document.querySelector(".submit-comment");
 const forgotBtn = document.querySelector(".forgotBtn");
 const resetBtn = document.querySelector("#resetPassword");
 const searchBtn = document.querySelector("#searchBtn");
+const postBlog = document.querySelector(".postBlog");
+const postRecipe = document.querySelector(".postRecipe");
 if (loginBtn) loginBtn.addEventListener("click", (e)=>{
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
@@ -763,6 +765,42 @@ if (searchBtn) searchBtn.addEventListener("click", async ()=>{
     const field = document.querySelector("#searchInput").value;
     (0, _loginJs.searchUser)(field);
 });
+if (postBlog) postBlog.addEventListener("click", async ()=>{
+    postBlog.textContent = "Upload";
+    const title = document.querySelector("#blogTitle").value;
+    const photo = document.querySelector("#blogPhoto").value;
+    const description = document.querySelector("#blogDescription").value;
+    const obj = {
+        title,
+        photo,
+        description,
+        type: "blog"
+    };
+    await (0, _loginJs.postaBlog)(obj);
+    postBlog.textContent = "Upload Blog";
+});
+if (postRecipe) postRecipe.addEventListener("click", async ()=>{
+    postRecipe.textContent = "please wait...";
+    const title = document.querySelector("#recipeTitle").value;
+    const photo = document.querySelector("#recipePhoto").value;
+    const description = document.querySelector("#recipeDescription").value;
+    const howToCook = document.querySelector("#howToCook").value;
+    const ingredients = document.querySelector("#ingredients").value;
+    const time = document.querySelector("#time").value;
+    const calories = document.querySelector("#calories").value;
+    const obj = {
+        title,
+        photo,
+        description,
+        howToCook,
+        ingredients,
+        time,
+        calories,
+        type: "recipe"
+    };
+    await (0, _loginJs.postaRecipe)(obj);
+    postRecipe.textContent = "Upload";
+});
 
 },{"./login.js":"7yHem"}],"7yHem":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -773,6 +811,8 @@ parcelHelpers.export(exports, "postComment", ()=>postComment);
 parcelHelpers.export(exports, "forgotPassword", ()=>forgotPassword);
 parcelHelpers.export(exports, "resetPassword", ()=>resetPassword);
 parcelHelpers.export(exports, "searchUser", ()=>searchUser);
+parcelHelpers.export(exports, "postaRecipe", ()=>postaRecipe);
+parcelHelpers.export(exports, "postaBlog", ()=>postaBlog);
 var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
 const login = async (obj)=>{
@@ -833,6 +873,26 @@ const searchUser = (name)=>{
     } catch (err) {
         alert(err.response.data.message);
         location.assign("/");
+        console.log(err);
+    }
+};
+const postaRecipe = async (obj)=>{
+    try {
+        await (0, _axiosDefault.default).post(`/api/v1/blogs`, obj);
+        location.assign("/");
+        alert("recipe has been posted successfully!");
+    } catch (err) {
+        alert(err.response.data.message);
+        console.log(err);
+    }
+};
+const postaBlog = async (obj)=>{
+    try {
+        await (0, _axiosDefault.default).post(`/api/v1/blogs`, obj);
+        location.assign("/");
+        alert("Blog has been posted successfully!");
+    } catch (err) {
+        alert(err.response.data.message);
         console.log(err);
     }
 };

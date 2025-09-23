@@ -4,7 +4,7 @@ block content
   .blog-container(class=`${isRecipe?'recipe-box':''}`)
     //- Blog Card
     .blog-card
-      img.blog-image(src=`/images/${blog.photo}` alt=blog.title)
+      img.blog-image(src=blog.photo alt=blog.title)
       .blog-content
         .blog-title= blog.title
         .blog-meta

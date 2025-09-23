@@ -9,37 +9,37 @@ block mainContent
       h3 Blog
       .field
         label Title:
-        input(type="text" placeholder="Enter blog title")
+        input#blogTitle(type="text" placeholder="Enter blog title")
       .field
         label Photo:
-        input(type="text" placeholder="Enter image link")
+        input#blogPhoto(type="text" placeholder="Enter image link")
       .field
         label Description:
-        textarea(placeholder="Enter blog description")
-      button Post Blog
+        textarea#blogDescription(placeholder="Enter blog description")
+      button.postBlog Post Blog
 
     // Recipe Section
     .recipe-section
       h3 Recipe
       .field
         label Title:
-        input(type="text" placeholder="Enter recipe title")
+        input#recipeTitle(type="text" placeholder="Enter recipe title")
       .field
         label Photo:
-        input(type="text" placeholder="Enter recipe photo")
+        input#recipePhoto(type="text" placeholder="Enter recipe photo")
       .field
         label Description:
-        textarea(placeholder="Enter recipe description")
+        textarea#recipeDescription(placeholder="Enter recipe description")
       .field
         label How to Cook:
-        textarea(placeholder="Steps to cook...")
+        textarea#howToCook(placeholder="Steps to cook...")
       .field
         label Ingredients:
-        input(type="text" placeholder="apple, 2 cups sugar, ...")
+        input#ingredients(type="text" placeholder="apple, 2 cups sugar, ...")
       .field
         label Time:
-        input(type="text" placeholder="30 minutes")
+        input#time(type="text" placeholder="30 minutes")
       .field
         label Calories:
-        input(type="text" placeholder="450 kcal")
-      button Post Recipe
+        input#calories(type="text" placeholder="450 kcal")
+      button.postRecipe Post Recipe

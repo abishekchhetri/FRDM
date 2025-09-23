@@ -3,7 +3,7 @@ const viewHandler = require("../controller/viewController");
 const authHandler = require("../controller/authController");
 
 const router = express.Router();
-// router.use(authHandler.isLoggedIn);
+router.use(authHandler.isLoggedIn);
 
 router.route("/").get(viewHandler.getReviewOfBlog);
 router.route("/blog/:slug").get(authHandler.protect, viewHandler.getBlog);

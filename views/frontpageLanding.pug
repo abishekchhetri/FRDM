@@ -5,7 +5,7 @@ block content
       .blog-card
         img(
           alt="Blog Image" 
-          src=`/images/${blog.photo}`
+          src=`${blog.photo}`
           )
         .blog-content
           .blog-date=`${new Date(blog.createdAt).toISOString().substring(0, 10)}`

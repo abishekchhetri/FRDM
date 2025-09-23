@@ -5,6 +5,8 @@ import {
   forgotPassword,
   resetPassword,
   searchUser,
+  postaRecipe,
+  postaBlog,
 } from "./login.js";
 const loginBtn = document.getElementById("loginBtn");
 const logoutBth = document.querySelector(".logout-btn");
@@ -12,6 +14,8 @@ const submitComment = document.querySelector(".submit-comment");
 const forgotBtn = document.querySelector(".forgotBtn");
 const resetBtn = document.querySelector("#resetPassword");
 const searchBtn = document.querySelector("#searchBtn");
+const postBlog = document.querySelector(".postBlog");
+const postRecipe = document.querySelector(".postRecipe");
 
 if (loginBtn) {
   loginBtn.addEventListener("click", (e) => {
@@ -62,3 +66,42 @@ if (searchBtn) {
     searchUser(field);
   });
 }
+if (postBlog) {
+  postBlog.addEventListener("click", async () => {
+    postBlog.textContent = "Upload";
+    const title = document.querySelector("#blogTitle").value;
+    const photo = document.querySelector("#blogPhoto").value;
+    const description = document.querySelector("#blogDescription").value;
+    const obj = {
+      title,
+      photo,
+      description,
+      type: "blog",
+    };
+    await postaBlog(obj);
+    postBlog.textContent = "Upload Blog";
+  });
+}
+if (postRecipe)
+  postRecipe.addEventListener("click", async () => {
+    postRecipe.textContent = "please wait...";
+    const title = document.querySelector("#recipeTitle").value;
+    const photo = document.querySelector("#recipePhoto").value;
+    const description = document.querySelector("#recipeDescription").value;
+    const howToCook = document.querySelector("#howToCook").value;
+    const ingredients = document.querySelector("#ingredients").value;
+    const time = document.querySelector("#time").value;
+    const calories = document.querySelector("#calories").value;
+    const obj = {
+      title,
+      photo,
+      description,
+      howToCook,
+      ingredients,
+      time,
+      calories,
+      type: "recipe",
+    };
+    await postaRecipe(obj);
+    postRecipe.textContent = "Upload";
+  });
