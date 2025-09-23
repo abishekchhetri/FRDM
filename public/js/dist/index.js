@@ -720,6 +720,7 @@ const logoutBth = document.querySelector(".logout-btn");
 const submitComment = document.querySelector(".submit-comment");
 const forgotBtn = document.querySelector(".forgotBtn");
 const resetBtn = document.querySelector("#resetPassword");
+const searchBtn = document.querySelector("#searchBtn");
 if (loginBtn) loginBtn.addEventListener("click", (e)=>{
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
@@ -758,6 +759,10 @@ if (resetBtn) resetBtn.addEventListener("click", async ()=>{
         passwordConfirm
     });
 });
+if (searchBtn) searchBtn.addEventListener("click", async ()=>{
+    const field = document.querySelector("#searchInput").value;
+    (0, _loginJs.searchUser)(field);
+});
 
 },{"./login.js":"7yHem"}],"7yHem":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -767,6 +772,7 @@ parcelHelpers.export(exports, "logout", ()=>logout);
 parcelHelpers.export(exports, "postComment", ()=>postComment);
 parcelHelpers.export(exports, "forgotPassword", ()=>forgotPassword);
 parcelHelpers.export(exports, "resetPassword", ()=>resetPassword);
+parcelHelpers.export(exports, "searchUser", ()=>searchUser);
 var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
 const login = async (obj)=>{
@@ -817,7 +823,16 @@ const resetPassword = async (token, obj)=>{
         location.assign("/");
     } catch (err) {
         alert(err.response.data.message);
-        location.reload("/");
+        location.reload(true);
+        console.log(err);
+    }
+};
+const searchUser = (name)=>{
+    try {
+        location.assign(`/user?name=${name}`);
+    } catch (err) {
+        alert(err.response.data.message);
+        location.assign("/");
         console.log(err);
     }
 };

@@ -4,12 +4,14 @@ import {
   postComment,
   forgotPassword,
   resetPassword,
+  searchUser,
 } from "./login.js";
 const loginBtn = document.getElementById("loginBtn");
 const logoutBth = document.querySelector(".logout-btn");
 const submitComment = document.querySelector(".submit-comment");
 const forgotBtn = document.querySelector(".forgotBtn");
 const resetBtn = document.querySelector("#resetPassword");
+const searchBtn = document.querySelector("#searchBtn");
 
 if (loginBtn) {
   loginBtn.addEventListener("click", (e) => {
@@ -51,5 +53,12 @@ if (resetBtn) {
     const passwordConfirm = document.getElementById("confirm-password").value;
     const link = window.location.href.split("/").at(-1); //get the token from link
     await resetPassword(link, { password, passwordConfirm });
+  });
+}
+
+if (searchBtn) {
+  searchBtn.addEventListener("click", async () => {
+    const field = document.querySelector("#searchInput").value;
+    searchUser(field);
   });
 }

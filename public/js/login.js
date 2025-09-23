@@ -52,7 +52,17 @@ export const resetPassword = async (token, obj) => {
     location.assign("/");
   } catch (err) {
     alert(err.response.data.message);
-    location.reload("/");
+    location.reload(true);
+    console.log(err);
+  }
+};
+
+export const searchUser = (name) => {
+  try {
+    location.assign(`/user?name=${name}`);
+  } catch (err) {
+    alert(err.response.data.message);
+    location.assign("/");
     console.log(err);
   }
 };

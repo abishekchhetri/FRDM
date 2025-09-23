@@ -717,3 +717,189 @@ button.delete-btn:hover {
 .delete-btn:hover {
   background: #c0392b;
 }
+
+/* user dashboard */
+/* Reset box-sizing */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Full-screen dashboard container */
+.container.dashboard {
+  min-height: 100vh;
+  width: 100%; /* use 100% instead of 100vw to avoid overflow */
+  padding: 40px 20px;
+  display: flex;
+  justify-content: center; /* horizontal center */
+  align-items: flex-start; /* start from top, change to center for vertical centering */
+  background-color: #f8f9fa;
+  overflow-x: hidden; /* prevent horizontal scroll */
+  overflow-y: auto; /* vertical scroll if needed */
+}
+
+/* Card styling */
+.card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 100%;
+  max-width: 900px; /* limits card width */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* User info section */
+.d-flex.align-items-center.mb-3 {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+.mb-4 {
+  margin-bottom: 10px;
+}
+img.rounded-circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #eee;
+}
+
+/* User info text */
+.user-info h5 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.user-info small {
+  color: #666;
+  font-size: 13px;
+}
+
+.user-info .badge {
+  display: inline-block;
+  padding: 5px 10px;
+  font-size: 12px;
+  border-radius: 20px;
+  background-color: #007bff;
+  color: #fff;
+  margin-top: 4px;
+}
+
+/* Admin buttons */
+.mb-4 button {
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  margin-right: 8px;
+  transition: all 0.2s ease;
+}
+
+button.btn-warning {
+  background-color: #ffc107;
+  color: #000;
+}
+
+button.btn-warning:hover {
+  background-color: #e0a800;
+}
+
+button.btn-danger {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+button.btn-danger:hover {
+  background-color: #c82333;
+}
+
+/* Blog/Recipe list */
+.list-group {
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.list-group-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fdfdfd;
+  border-radius: 10px;
+  padding: 12px 16px;
+  border: 1px solid #e6e6e6;
+  transition: all 0.2s ease;
+}
+
+.list-group-item:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Blog/Recipe text */
+.list-group-item strong {
+  font-size: 15px;
+}
+
+.list-group-item small {
+  font-size: 13px;
+  color: #888;
+}
+
+/* Update/Delete buttons in list */
+.btn-group {
+  display: flex;
+  gap: 8px;
+}
+
+button.btn-outline-primary {
+  padding: 5px 10px;
+  border: 1px solid #007bff;
+  color: #007bff;
+  background: transparent;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+button.btn-outline-primary:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+
+button.btn-outline-danger {
+  padding: 5px 10px;
+  border: 1px solid #dc3545;
+  color: #dc3545;
+  background: transparent;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+button.btn-outline-danger:hover {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .card {
+    padding: 15px;
+  }
+  .list-group-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .btn-group {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}

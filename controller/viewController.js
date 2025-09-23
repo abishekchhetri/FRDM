@@ -67,3 +67,28 @@ exports.comments = catchAsync(async (req, res, next) => {
     title: "Admin: comments",
   });
 });
+
+exports.getUser = catchAsync(async (req, res, next) => {
+  const userS = await User.findOne(req.query)
+    .populate({
+      path: "comments",
+      select: "",
+    })
+    .populate("blogs");
+
+  console.log(userS.blogs);
+
+  res.status(200).render("userDashboard", {
+    title: !userS ? "No users Found" : userS.name,
+    userS,
+    flag: true,
+  });
+});
+
+exports.aboutMe = catchAsync(async (req, res, next) => {
+  const userS = req.user;
+  res.status(200).render("userDashboard", {
+    title: !userS ? "No users Found" : userS.name,
+    userS,
+  });
+});

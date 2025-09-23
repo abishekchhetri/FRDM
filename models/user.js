@@ -55,7 +55,7 @@ const userSchema = mongoose.Schema(
     },
   },
   {
-    toObject: { virtuals: true },
+    toJSON: { virtuals: true },
     toString: { virtuals: true },
   }
 );
@@ -66,6 +66,11 @@ userSchema.virtual("comments", {
   localField: "_id",
 });
 
+userSchema.virtual("blogs", {
+  ref: "blog",
+  foreignField: "user",
+  localField: "_id",
+});
 //password encrypting before creating password in presave mongoose web hook
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();

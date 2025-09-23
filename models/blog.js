@@ -26,6 +26,10 @@ const blogSchema = mongoose.Schema(
     slug: {
       type: "String",
     },
+    user: {
+      type: mongoose.Schema.ObjectId,
+      ref: "user",
+    },
     //we populate the comments here by virtual populate
   },
   {

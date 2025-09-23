@@ -18,5 +18,5 @@ router.route("/comments").get(userHandler.user);
 router.use(authHandler.restrictTo("admin"));
 
 router.route("/").get(userHandler.getAllUsers);
-router.route("/:id").get(userHandler.deleteUser);
+router.route("/:id").delete(userHandler.deleteUser);
 module.exports = router;

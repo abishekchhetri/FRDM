@@ -3,7 +3,11 @@ const catchAsync = require("../utils/catchAsync");
 
 //update me crud of user done here
 exports.getAllUsers = catchAsync(async (req, res, next) => {
-  const user = await User.find();
+  //we inject req.query in our app so we can find user by email or by the name
+  const user = await User.find(req.query).populate({
+    path: "comments",
+    select: "",
+  });
   res.status(200).json({
     status: "success",
     users: user,
