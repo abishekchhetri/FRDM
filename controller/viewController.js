@@ -76,19 +76,25 @@ exports.getUser = catchAsync(async (req, res, next) => {
     })
     .populate("blogs");
 
-  console.log(userS.blogs);
-
   res.status(200).render("userDashboard", {
     title: !userS ? "No users Found" : userS.name,
     userS,
+    blogs: userS.blogs,
     flag: true,
   });
 });
 
 exports.aboutMe = catchAsync(async (req, res, next) => {
-  const userS = req.user;
+  const userS = await User.findById(req.user.id)
+    .populate({
+      path: "comments",
+      select: "",
+    })
+    .populate("blogs");
+
   res.status(200).render("userDashboard", {
     title: !userS ? "No users Found" : userS.name,
     userS,
+    blogs: userS.blogs,
   });
 });

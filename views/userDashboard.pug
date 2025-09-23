@@ -22,15 +22,16 @@ block mainContent
             button.btn-danger Delete
 
         -const isAdminCollab = userS.role==='admin'||userS.role==='collaborator'?true:false
-        
         if(isAdminCollab)
           h5.mb-3 Uploaded Blogs / Recipes
           ul.list-group
-            each val, index in [1,2,3,4,5]
-              li.list-group-item
-                .flex-column
-                  strong Blog/Recipe #{index}
-                  small.text-muted Type: blog
-                .btn-group
-                  button.btn-outline-primary Update
-                  button.btn-outline-danger Delete
+            if(true)
+              each blog in blogs
+                li.list-group-item
+                  .flex-column
+                    strong #{blog.title}
+                    small.text-muted ----- #{blog.type}
+                    small.text-muted --> #{blog.createdAt}
+                  .btn-group
+                    button.btn-outline-primary(data-id=`${blog.id}`) Update
+                    button.btn-outline-danger(data-id=`${blog.id}`) Delete

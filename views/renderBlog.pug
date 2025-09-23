@@ -1,6 +1,7 @@
 extends base
 block content 
-  .blog-container
+  -const isRecipe = blog.type==='recipe'?true:false
+  .blog-container(class=`${isRecipe?'recipe-box':''}`)
     //- Blog Card
     .blog-card
       img.blog-image(src=`/images/${blog.photo}` alt=blog.title)
@@ -10,7 +11,27 @@ block content
           span.blog-date Created: #{new Date(blog.createdAt).toLocaleDateString()}
           |  | 
           span.blog-uploaded Uploaded by: #{blog.uploadedBy}
+
         p.blog-description= blog.description
+      if(isRecipe)
+        .recipe-container
+          .recipe-card
+            h3 Recipe Details
+            .recipe-info
+              
+              p
+                strong Time: 
+                | #{blog.time} minutes
+              p
+                strong Calories: 
+                | #{blog.calories} kcal
+              p
+                strong Ingredients:
+                | #{blog.ingredients}
+              p
+                strong How to Cook : 
+                | #{blog.howToCook}
+
 
     if(user)
       .comments-section
@@ -27,4 +48,3 @@ block content
             .comment-body
               span.comment-user= comment.user.name
               p.comment-text= comment.comment
-

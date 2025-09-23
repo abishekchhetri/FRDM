@@ -23,6 +23,30 @@ const blogSchema = mongoose.Schema(
       type: "String",
       default: "admin",
     },
+
+    //type specifies the blog or recipe
+    type: {
+      type: "String",
+      enum: ["recipe", "blog"],
+      required: [
+        true,
+        "you cannot post without specifying if it is a blog or recipe",
+      ],
+    },
+    // *******Recipe in db optional triggered by type***********
+    howToCook: {
+      type: "String",
+    },
+    ingredients: {
+      type: "String",
+    },
+    time: {
+      type: "String",
+    },
+    calories: {
+      type: "String",
+    },
+    //************************** */
     slug: {
       type: "String",
     },
