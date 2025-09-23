@@ -1,0 +1,45 @@
+extends sidebar
+
+block mainContent
+  section.section-container
+    h2.section-title Upload Blog & Recipe
+
+    // Blog Section
+    .blog-section
+      h3 Blog
+      .field
+        label Title:
+        input(type="text" placeholder="Enter blog title")
+      .field
+        label Photo:
+        input(type="text" placeholder="Enter image link")
+      .field
+        label Description:
+        textarea(placeholder="Enter blog description")
+      button Post Blog
+
+    // Recipe Section
+    .recipe-section
+      h3 Recipe
+      .field
+        label Title:
+        input(type="text" placeholder="Enter recipe title")
+      .field
+        label Photo:
+        input(type="text" placeholder="Enter recipe photo")
+      .field
+        label Description:
+        textarea(placeholder="Enter recipe description")
+      .field
+        label How to Cook:
+        textarea(placeholder="Steps to cook...")
+      .field
+        label Ingredients:
+        input(type="text" placeholder="apple, 2 cups sugar, ...")
+      .field
+        label Time:
+        input(type="text" placeholder="30 minutes")
+      .field
+        label Calories:
+        input(type="text" placeholder="450 kcal")
+      button Post Recipe

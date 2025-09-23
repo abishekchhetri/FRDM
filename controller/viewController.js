@@ -1,6 +1,7 @@
 const catchAsync = require("../utils/catchAsync");
 const User = require("../models/user");
 const Blog = require("../models/blog");
+const AppError = require("../utils/appError");
 
 exports.getReviewOfBlog = catchAsync(async (req, res, next) => {
   const blog = await Blog.find();
@@ -40,12 +41,6 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 exports.resetPassword = catchAsync(async (req, res, next) => {
   res.render("resetPassword", {
     title: "reset-password",
-  });
-});
-
-exports.me = catchAsync(async (req, res, next) => {
-  res.render("landme", {
-    title: "me",
   });
 });
 
@@ -98,3 +93,11 @@ exports.aboutMe = catchAsync(async (req, res, next) => {
     blogs: userS.blogs,
   });
 });
+
+exports.uploadContent = catchAsync(async (req, res, next) => {
+  res.status(200).render("uploadRecipeBlog", {
+    title: "upload data",
+    upload: "true",
+  });
+});
+// exports.updateContent = catchAsync((req, res, next) => {});

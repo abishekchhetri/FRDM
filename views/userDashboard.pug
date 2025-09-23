@@ -16,10 +16,9 @@ block mainContent
 
         // Show buttons if role is admin
         -const isAdmin = userS.role==='admin'&&flag?true:false
-        if(isAdmin)
           .mb-4
             button.btn-warning.me-2 Warn
-            button.btn-danger Delete
+            button.btn-danger(data-id=`${userS.id}`) Delete
 
         -const isAdminCollab = userS.role==='admin'||userS.role==='collaborator'?true:false
         if(isAdminCollab)

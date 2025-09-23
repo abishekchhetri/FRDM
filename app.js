@@ -15,10 +15,11 @@ app.use(cookieParser());
 app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
+
+app.use("/", viewHandler);
 app.use("/api/v1/blogs", blogRouter);
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/comment", commentHandler);
-app.use("/", viewHandler);
 app.all("*", (req, res, next) => {
   next(new AppError("cannot visit that route", 500));
 });
