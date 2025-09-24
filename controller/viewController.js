@@ -97,7 +97,14 @@ exports.aboutMe = catchAsync(async (req, res, next) => {
 exports.uploadContent = catchAsync(async (req, res, next) => {
   res.status(200).render("uploadRecipeBlog", {
     title: "upload data",
-    upload: "true",
   });
 });
-// exports.updateContent = catchAsync((req, res, next) => {});
+
+exports.updateContent = catchAsync(async (req, res, next) => {
+  const blog = await Blog.findById(req.params.id);
+  res.status(200).render("uploadRecipeBlog", {
+    title: "update blog",
+    blog,
+    update: true,
+  });
+});

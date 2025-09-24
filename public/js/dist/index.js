@@ -724,6 +724,7 @@ const searchBtn = document.querySelector("#searchBtn");
 const postBlog = document.querySelector(".postBlog");
 const postRecipe = document.querySelector(".postRecipe");
 const deleteComment = document.querySelector(".comments-section");
+const deleteBlog = document.querySelector(".card-body");
 if (loginBtn) loginBtn.addEventListener("click", (e)=>{
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
@@ -807,6 +808,13 @@ if (deleteComment) deleteComment.addEventListener("click", async (e)=>{
     e.target.textContent = "Deleting...";
     await (0, _loginJs.deleteaComment)(e.target.dataset.id);
 });
+if (deleteBlog) deleteBlog.addEventListener("click", async (e)=>{
+    if (e.target.classList.contains("btn-outline-primary")) e.target.textContent = "Updating...";
+    else if (e.target.classList.contains("btn-outline-danger")) {
+        e.target.textContent = "Deleting...";
+        await (0, _loginJs.deleteaBlog)(e.target.dataset.id);
+    } else return;
+});
 
 },{"./login.js":"7yHem"}],"7yHem":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -820,6 +828,8 @@ parcelHelpers.export(exports, "searchUser", ()=>searchUser);
 parcelHelpers.export(exports, "postaRecipe", ()=>postaRecipe);
 parcelHelpers.export(exports, "postaBlog", ()=>postaBlog);
 parcelHelpers.export(exports, "deleteaComment", ()=>deleteaComment);
+parcelHelpers.export(exports, "deleteaBlog", ()=>deleteaBlog);
+parcelHelpers.export(exports, "updateBlog", ()=>updateBlog);
 var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
 const login = async (obj)=>{
@@ -912,6 +922,17 @@ const deleteaComment = async (id)=>{
         console.log(err);
     }
 };
+const deleteaBlog = async (id)=>{
+    try {
+        await (0, _axiosDefault.default).delete(`/api/v1/blogs/${id}`);
+        alert("data deleted!");
+        location.assign("/");
+    } catch (err) {
+        alert(err.response.data.message);
+        console.log(err);
+    }
+};
+const updateBlog = async (id)=>{};
 
 },{"axios":"jo6P5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jo6P5":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");

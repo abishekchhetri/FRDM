@@ -17,6 +17,9 @@ router.route("/comments").get(authHandler.protect, viewHandler.comments);
 router.route("/user").get(authHandler.protect, viewHandler.getUser);
 router.route("/about").get(authHandler.protect, viewHandler.aboutMe);
 router
+  .route("/update-blog/:id")
+  .get(authHandler.protect, viewHandler.updateContent);
+router
   .route("/post-recipe")
   .get(authHandler.protect, viewHandler.uploadContent);
 

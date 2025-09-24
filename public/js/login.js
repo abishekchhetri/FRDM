@@ -98,3 +98,16 @@ export const deleteaComment = async (id) => {
     console.log(err);
   }
 };
+
+export const deleteaBlog = async (id) => {
+  try {
+    await axios.delete(`/api/v1/blogs/${id}`);
+    alert("data deleted!");
+    location.assign("/");
+  } catch (err) {
+    alert(err.response.data.message);
+    console.log(err);
+  }
+};
+
+export const updateBlog = async (id) => {};

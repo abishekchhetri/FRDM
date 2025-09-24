@@ -2,44 +2,57 @@ extends sidebar
 
 block mainContent
   section.section-container
-    h2.section-title Upload Blog & Recipe
+    -const isBlog = blog?.type==='blog'
+    -const isRecipe = blog?.type==='recipe'
+    -const boolRecipe = !(isRecipe||isBlog)||isRecipe
+    -const boolBlog = !(isRecipe||isBlog)||isBlog 
+    -const bool = !(isRecipe||isBlog)
+    -const mm = bool?'Upload Blog & Recipe':`Update ${blog.type}`
+    h2.section-title #{mm}
 
     // Blog Section
-    .blog-section
-      h3 Blog
-      .field
-        label Title:
-        input#blogTitle(type="text" placeholder="Enter blog title")
-      .field
-        label Photo:
-        input#blogPhoto(type="text" placeholder="Enter image link")
-      .field
-        label Description:
-        textarea#blogDescription(placeholder="Enter blog description")
-      button.postBlog Post Blog
+    if(boolBlog)
+      .blog-section
+        h3 Blog
+        .field
+          label Title:
+          input#blogTitle(type="text" placeholder="Enter blog title" value=`${isBlog?blog.title:''}`)
+        .field
+          label Photo:
+          input#blogPhoto(type="text" placeholder="Enter image link" value=`${isBlog?blog.photo:''}`)
+        .field
+          label Description:
+          textarea#blogDescription(placeholder="Enter blog description") #{isBlog?blog.description:''}
+          -const bp = isBlog?'Update blog':'Post blog'
+        button.postBlog #{bp}
 
     // Recipe Section
-    .recipe-section
-      h3 Recipe
-      .field
-        label Title:
-        input#recipeTitle(type="text" placeholder="Enter recipe title")
-      .field
-        label Photo:
-        input#recipePhoto(type="text" placeholder="Enter recipe photo")
-      .field
-        label Description:
-        textarea#recipeDescription(placeholder="Enter recipe description")
-      .field
-        label How to Cook:
-        textarea#howToCook(placeholder="Steps to cook...")
-      .field
-        label Ingredients:
-        input#ingredients(type="text" placeholder="apple, 2 cups sugar, ...")
-      .field
-        label Time:
-        input#time(type="text" placeholder="30 minutes")
-      .field
-        label Calories:
-        input#calories(type="text" placeholder="450 kcal")
-      button.postRecipe Post Recipe
+    //- -const bool = !(isBlog||isRecipe)
+    if(boolRecipe)
+      .recipe-section
+        h3 Recipe
+        .field
+          label Title:
+          input#recipeTitle(type="text" placeholder="Enter recipe title" value=`${isRecipe?blog.title:''}`)
+        .field
+          label Photo:
+          input#recipePhoto(type="text" placeholder="Enter recipe photo" value=`${isRecipe?blog.photo:''}`)
+        .field
+          label Description:
+          -const rd = `${isRecipe?blog.description:''}`
+          textarea#recipeDescription(placeholder="Enter recipe description" value=`${isRecipe?blog.description:''}`) #{rd}
+        .field
+          label How to Cook:
+          -const htc = `${isRecipe?blog.howToCook:''}`
+          textarea#howToCook(placeholder="Steps to cook..." value=`${isRecipe?blog.howToCook:''}`) #{htc}
+        .field
+          label Ingredients:
+          input#ingredients(type="text" placeholder="apple, 2 cups sugar, ..." value=`${isRecipe?blog.ingredients:''}`)
+        .field
+          label Time:
+          input#time(type="text" placeholder="30 minutes" value=`${isRecipe?blog.time:''}`)
+        .field
+          label Calories:
+          -const ip = isRecipe?'update Recipe':'Post recipe'
+          input#calories(type="text" placeholder="450 kcal" value=`${isRecipe?blog.calories:''}`)
+        button.postRecipe #{ip}

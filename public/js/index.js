@@ -8,6 +8,7 @@ import {
   postaRecipe,
   postaBlog,
   deleteaComment,
+  deleteaBlog,
 } from "./login.js";
 const loginBtn = document.getElementById("loginBtn");
 const logoutBth = document.querySelector(".logout-btn");
@@ -18,6 +19,7 @@ const searchBtn = document.querySelector("#searchBtn");
 const postBlog = document.querySelector(".postBlog");
 const postRecipe = document.querySelector(".postRecipe");
 const deleteComment = document.querySelector(".comments-section");
+const deleteBlog = document.querySelector(".card-body");
 
 if (loginBtn) {
   loginBtn.addEventListener("click", (e) => {
@@ -113,4 +115,14 @@ if (deleteComment)
     if (!e.target.classList.contains("delete-cmnt")) return;
     e.target.textContent = "Deleting...";
     await deleteaComment(e.target.dataset.id);
+  });
+
+if (deleteBlog)
+  deleteBlog.addEventListener("click", async (e) => {
+    if (e.target.classList.contains("btn-outline-primary")) {
+      e.target.textContent = "Updating...";
+    } else if (e.target.classList.contains("btn-outline-danger")) {
+      e.target.textContent = "Deleting...";
+      await deleteaBlog(e.target.dataset.id);
+    } else return;
   });

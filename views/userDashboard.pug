@@ -32,5 +32,5 @@ block mainContent
                     small.text-muted ----- #{blog.type}
                     small.text-muted --> #{blog.createdAt}
                   .btn-group
-                    button.btn-outline-primary(data-id=`${blog.id}`) Update
+                    a.btn.btn-outline-primary(href=`/update-blog/${blog.id}`) Update
                     button.btn-outline-danger(data-id=`${blog.id}`) Delete
