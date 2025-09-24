@@ -9,6 +9,7 @@ import {
   postaBlog,
   deleteaComment,
   deleteaBlog,
+  updateaBlog,
 } from "./login.js";
 const loginBtn = document.getElementById("loginBtn");
 const logoutBth = document.querySelector(".logout-btn");
@@ -20,6 +21,8 @@ const postBlog = document.querySelector(".postBlog");
 const postRecipe = document.querySelector(".postRecipe");
 const deleteComment = document.querySelector(".comments-section");
 const deleteBlog = document.querySelector(".card-body");
+const updateBlog = document.querySelector(".updateBlog");
+const updateRecipe = document.querySelector(".updateRecipe");
 
 if (loginBtn) {
   loginBtn.addEventListener("click", (e) => {
@@ -125,4 +128,48 @@ if (deleteBlog)
       e.target.textContent = "Deleting...";
       await deleteaBlog(e.target.dataset.id);
     } else return;
+  });
+
+// UPDATE RECIPE AND BLOG
+if (updateBlog) {
+  updateBlog.addEventListener("click", async (e) => {
+    updateBlog.textContent = "Uploading...";
+    const title = document.querySelector("#blogTitle").value;
+    const photo = document.querySelector("#blogPhoto").value;
+    const description = document.querySelector("#blogDescription").value;
+    const obj = {
+      title,
+      photo,
+      description,
+      type: "blog",
+    };
+
+    const id = e.target.dataset.id;
+    await updateaBlog(obj, id);
+    updateBlog.textContent = "Upload Blog";
+  });
+}
+if (updateRecipe)
+  updateRecipe.addEventListener("click", async (e) => {
+    updateRecipe.textContent = "please wait...";
+    const title = document.querySelector("#recipeTitle").value;
+    const photo = document.querySelector("#recipePhoto").value;
+    const description = document.querySelector("#recipeDescription").value;
+    const howToCook = document.querySelector("#howToCook").value;
+    const ingredients = document.querySelector("#ingredients").value;
+    const time = document.querySelector("#time").value;
+    const calories = document.querySelector("#calories").value;
+    const obj = {
+      title,
+      photo,
+      description,
+      howToCook,
+      ingredients,
+      time,
+      calories,
+      type: "recipe",
+    };
+    const id = e.target.dataset.id;
+    await updateaBlog(obj, id);
+    updateRecipe.textContent = "Upload";
   });

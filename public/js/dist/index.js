@@ -725,6 +725,8 @@ const postBlog = document.querySelector(".postBlog");
 const postRecipe = document.querySelector(".postRecipe");
 const deleteComment = document.querySelector(".comments-section");
 const deleteBlog = document.querySelector(".card-body");
+const updateBlog = document.querySelector(".updateBlog");
+const updateRecipe = document.querySelector(".updateRecipe");
 if (loginBtn) loginBtn.addEventListener("click", (e)=>{
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
@@ -815,6 +817,45 @@ if (deleteBlog) deleteBlog.addEventListener("click", async (e)=>{
         await (0, _loginJs.deleteaBlog)(e.target.dataset.id);
     } else return;
 });
+// UPDATE RECIPE AND BLOG
+if (updateBlog) updateBlog.addEventListener("click", async (e)=>{
+    updateBlog.textContent = "Uploading...";
+    const title = document.querySelector("#blogTitle").value;
+    const photo = document.querySelector("#blogPhoto").value;
+    const description = document.querySelector("#blogDescription").value;
+    const obj = {
+        title,
+        photo,
+        description,
+        type: "blog"
+    };
+    const id = e.target.dataset.id;
+    await (0, _loginJs.updateaBlog)(obj, id);
+    updateBlog.textContent = "Upload Blog";
+});
+if (updateRecipe) updateRecipe.addEventListener("click", async (e)=>{
+    updateRecipe.textContent = "please wait...";
+    const title = document.querySelector("#recipeTitle").value;
+    const photo = document.querySelector("#recipePhoto").value;
+    const description = document.querySelector("#recipeDescription").value;
+    const howToCook = document.querySelector("#howToCook").value;
+    const ingredients = document.querySelector("#ingredients").value;
+    const time = document.querySelector("#time").value;
+    const calories = document.querySelector("#calories").value;
+    const obj = {
+        title,
+        photo,
+        description,
+        howToCook,
+        ingredients,
+        time,
+        calories,
+        type: "recipe"
+    };
+    const id = e.target.dataset.id;
+    await (0, _loginJs.updateaBlog)(obj, id);
+    updateRecipe.textContent = "Upload";
+});
 
 },{"./login.js":"7yHem"}],"7yHem":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -829,7 +870,7 @@ parcelHelpers.export(exports, "postaRecipe", ()=>postaRecipe);
 parcelHelpers.export(exports, "postaBlog", ()=>postaBlog);
 parcelHelpers.export(exports, "deleteaComment", ()=>deleteaComment);
 parcelHelpers.export(exports, "deleteaBlog", ()=>deleteaBlog);
-parcelHelpers.export(exports, "updateBlog", ()=>updateBlog);
+parcelHelpers.export(exports, "updateaBlog", ()=>updateaBlog);
 var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
 const login = async (obj)=>{
@@ -905,6 +946,7 @@ const postaRecipe = async (obj)=>{
 };
 const postaBlog = async (obj)=>{
     try {
+        console.log(obj);
         await (0, _axiosDefault.default).post(`/api/v1/blogs`, obj);
         location.assign("/");
         alert("Blog has been posted successfully!");
@@ -932,7 +974,17 @@ const deleteaBlog = async (id)=>{
         console.log(err);
     }
 };
-const updateBlog = async (id)=>{};
+const updateaBlog = async (obj, id)=>{
+    try {
+        console.log(obj);
+        await (0, _axiosDefault.default).patch(`/api/v1/blogs/${id}`, obj);
+        alert("Data Updated!");
+        location.assign("/");
+    } catch (err) {
+        alert(err.response.data.message);
+        console.log(err);
+    }
+};
 
 },{"axios":"jo6P5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jo6P5":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");

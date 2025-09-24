@@ -24,7 +24,7 @@ block mainContent
           label Description:
           textarea#blogDescription(placeholder="Enter blog description") #{isBlog?blog.description:''}
           -const bp = isBlog?'Update blog':'Post blog'
-        button.postBlog #{bp}
+        button(data-id = `${isBlog?blog.id:''}` class=`${bool?'postBlog':'updateBlog'}` ) #{bp}
 
     // Recipe Section
     //- -const bool = !(isBlog||isRecipe)
@@ -55,4 +55,4 @@ block mainContent
           label Calories:
           -const ip = isRecipe?'update Recipe':'Post recipe'
           input#calories(type="text" placeholder="450 kcal" value=`${isRecipe?blog.calories:''}`)
-        button.postRecipe #{ip}
+        button(data-id = `${isRecipe?blog.id:''}` class=`${bool?'postRecipe':'updateRecipe'}` ) #{ip}

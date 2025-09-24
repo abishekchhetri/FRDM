@@ -80,6 +80,7 @@ export const postaRecipe = async (obj) => {
 
 export const postaBlog = async (obj) => {
   try {
+    console.log(obj);
     await axios.post(`/api/v1/blogs`, obj);
     location.assign("/");
     alert("Blog has been posted successfully!");
@@ -110,4 +111,15 @@ export const deleteaBlog = async (id) => {
   }
 };
 
-export const updateBlog = async (id) => {};
+export const updateaBlog = async (obj, id) => {
+  try {
+    console.log(obj);
+
+    await axios.patch(`/api/v1/blogs/${id}`, obj);
+    alert("Data Updated!");
+    location.assign("/");
+  } catch (err) {
+    alert(err.response.data.message);
+    console.log(err);
+  }
+};
