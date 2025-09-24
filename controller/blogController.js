@@ -2,6 +2,7 @@ const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 const Blog = require("../models/blog");
 const Comment = require("../models/comment");
+const Email = require("../utils/email");
 
 exports.getAllBlog = catchAsync(async (req, res, next) => {
   const blogs = await Blog.find();
@@ -16,6 +17,16 @@ exports.getAllBlog = catchAsync(async (req, res, next) => {
 exports.postBlog = catchAsync(async (req, res, next) => {
   req.body.user = req.user.id;
   const blogs = await Blog.create(req.body);
+  if (!req.body.user.role === "admin")
+    await new Email(
+      user,
+      `${req.protocol}://${req.get("host")}/${blogs.slug}`
+    ).sendUploadContent(
+      "normalMessage",
+      `Dear, ${req.body.user.name} you have just uploaded a ${blogs.type} named as ${blogs.title}, as a collaborator, if you have uploaded any thing wrong just delete otherwise you will violate our terms and policy and your account will be permanently deleted`,
+      `uploaded a ${blogs.type}`
+    );
+
   res.status(201).json({
     status: "success",
     blogs,

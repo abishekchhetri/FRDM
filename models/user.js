@@ -53,6 +53,10 @@ const userSchema = mongoose.Schema(
       type: "String",
       default: "user",
     },
+    verified: {
+      type: "String",
+      default: "no",
+    },
   },
   {
     toJSON: { virtuals: true },
@@ -60,6 +64,10 @@ const userSchema = mongoose.Schema(
   }
 );
 
+userSchema.pre(/^find/, function (next) {
+  this.find({ verified: { $ne: "no" } });
+  next();
+});
 userSchema.virtual("comments", {
   ref: "comment",
   foreignField: "user",

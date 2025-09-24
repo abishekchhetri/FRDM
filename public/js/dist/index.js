@@ -727,6 +727,8 @@ const deleteComment = document.querySelector(".comments-section");
 const deleteBlog = document.querySelector(".card-body");
 const updateBlog = document.querySelector(".updateBlog");
 const updateRecipe = document.querySelector(".updateRecipe");
+const btnDanger = document.querySelector(".btn-danger");
+const signUp = document.querySelector("#signupBtn");
 if (loginBtn) loginBtn.addEventListener("click", (e)=>{
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
@@ -856,10 +858,29 @@ if (updateRecipe) updateRecipe.addEventListener("click", async (e)=>{
     await (0, _loginJs.updateaBlog)(obj, id);
     updateRecipe.textContent = "Upload";
 });
+if (btnDanger) btnDanger.addEventListener("click", async (e)=>{
+    btnDanger.textContent = "Deleting...";
+    const id = e.target.dataset.id;
+    await (0, _loginJs.deleteaUser)(id);
+    btnDanger.textContent = "Delete";
+});
+if (signUp) signUp.addEventListener("click", ()=>{
+    const name = document.querySelector("#name").value;
+    const email = document.querySelector("#email").value;
+    const passwordConfirm = document.querySelector("#passwordConfirm").value;
+    const password = document.querySelector("#password").value;
+    const obj = {
+        name,
+        email,
+        passwordConfirm,
+        password
+    };
+});
 
 },{"./login.js":"7yHem"}],"7yHem":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "signup", ()=>signup);
 parcelHelpers.export(exports, "login", ()=>login);
 parcelHelpers.export(exports, "logout", ()=>logout);
 parcelHelpers.export(exports, "postComment", ()=>postComment);
@@ -871,8 +892,19 @@ parcelHelpers.export(exports, "postaBlog", ()=>postaBlog);
 parcelHelpers.export(exports, "deleteaComment", ()=>deleteaComment);
 parcelHelpers.export(exports, "deleteaBlog", ()=>deleteaBlog);
 parcelHelpers.export(exports, "updateaBlog", ()=>updateaBlog);
+parcelHelpers.export(exports, "deleteaUser", ()=>deleteaUser);
 var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
+const signup = async (obj)=>{
+    try {
+        const val = await (0, _axiosDefault.default).post(`/api/v1/user/signup`, obj);
+        alert("Email has been sent to check email validity check your inbox");
+        location.assign("/");
+    } catch (err) {
+        alert(err.response.data.message);
+        console.log(err);
+    }
+};
 const login = async (obj)=>{
     try {
         const val = await (0, _axiosDefault.default).post(`/api/v1/user/login`, obj);
@@ -976,9 +1008,18 @@ const deleteaBlog = async (id)=>{
 };
 const updateaBlog = async (obj, id)=>{
     try {
-        console.log(obj);
         await (0, _axiosDefault.default).patch(`/api/v1/blogs/${id}`, obj);
         alert("Data Updated!");
+        location.assign("/");
+    } catch (err) {
+        alert(err.response.data.message);
+        console.log(err);
+    }
+};
+const deleteaUser = async (id)=>{
+    try {
+        await (0, _axiosDefault.default).delete(`api/v1/user/${id}`);
+        alert("User deleted!");
         location.assign("/");
     } catch (err) {
         alert(err.response.data.message);

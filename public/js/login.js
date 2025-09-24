@@ -1,5 +1,16 @@
 import axios from "axios";
 
+export const signup = async (obj) => {
+  try {
+    const val = await axios.post(`/api/v1/user/signup`, obj);
+    alert("Email has been sent to check email validity check your inbox");
+    location.assign("/");
+  } catch (err) {
+    alert(err.response.data.message);
+    console.log(err);
+  }
+};
+
 export const login = async (obj) => {
   try {
     const val = await axios.post(`/api/v1/user/login`, obj);
@@ -113,10 +124,19 @@ export const deleteaBlog = async (id) => {
 
 export const updateaBlog = async (obj, id) => {
   try {
-    console.log(obj);
-
     await axios.patch(`/api/v1/blogs/${id}`, obj);
     alert("Data Updated!");
+    location.assign("/");
+  } catch (err) {
+    alert(err.response.data.message);
+    console.log(err);
+  }
+};
+
+export const deleteaUser = async (id) => {
+  try {
+    await axios.delete(`api/v1/user/${id}`);
+    alert("User deleted!");
     location.assign("/");
   } catch (err) {
     alert(err.response.data.message);

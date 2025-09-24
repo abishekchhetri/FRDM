@@ -10,6 +10,7 @@ import {
   deleteaComment,
   deleteaBlog,
   updateaBlog,
+  deleteaUser,
 } from "./login.js";
 const loginBtn = document.getElementById("loginBtn");
 const logoutBth = document.querySelector(".logout-btn");
@@ -23,6 +24,8 @@ const deleteComment = document.querySelector(".comments-section");
 const deleteBlog = document.querySelector(".card-body");
 const updateBlog = document.querySelector(".updateBlog");
 const updateRecipe = document.querySelector(".updateRecipe");
+const btnDanger = document.querySelector(".btn-danger");
+const signUp = document.querySelector("#signupBtn");
 
 if (loginBtn) {
   loginBtn.addEventListener("click", (e) => {
@@ -173,3 +176,23 @@ if (updateRecipe)
     await updateaBlog(obj, id);
     updateRecipe.textContent = "Upload";
   });
+
+if (btnDanger) {
+  btnDanger.addEventListener("click", async (e) => {
+    btnDanger.textContent = "Deleting...";
+    const id = e.target.dataset.id;
+    await deleteaUser(id);
+    btnDanger.textContent = "Delete";
+  });
+}
+
+if (signUp) {
+  signUp.addEventListener("click", () => {
+    const name = document.querySelector("#name").value;
+    const email = document.querySelector("#email").value;
+    const passwordConfirm = document.querySelector("#passwordConfirm").value;
+    const password = document.querySelector("#password").value;
+
+    const obj = { name, email, passwordConfirm, password };
+  });
+}

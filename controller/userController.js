@@ -1,4 +1,6 @@
 const User = require("../models/user");
+const Blog = require("../models/blog");
+const Comment = require("../models/comment");
 const catchAsync = require("../utils/catchAsync");
 
 //update me crud of user done here
@@ -15,10 +17,16 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
 });
 
 exports.deleteUser = catchAsync(async (req, res, next) => {
-  const user = await User.findByIdAndDelete(req.params.id);
+  const promises = [
+    await User.findByIdAndDelete(req.params.id),
+    await Comment.deleteMany({ user: req.params.id }),
+    await Blog.deleteMany({ user: req.params.id }),
+  ];
+
+  await Promise.all(promises);
+
   res.status(204).json({
     status: "success",
-    message: "deleted successfully " + user.name,
   });
 });
 

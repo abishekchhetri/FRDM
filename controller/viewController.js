@@ -29,6 +29,7 @@ exports.login = catchAsync(async (req, res, next) => {
 exports.signup = catchAsync(async (req, res, next) => {
   res.render("login", {
     title: "login",
+    flag: true,
   });
 });
 
@@ -71,12 +72,14 @@ exports.getUser = catchAsync(async (req, res, next) => {
     })
     .populate("blogs");
 
-  res.status(200).render("userDashboard", {
-    title: !userS ? "No users Found" : userS.name,
-    userS,
-    blogs: userS.blogs,
-    flag: true,
-  });
+  if (userS)
+    res.status(200).render("userDashboard", {
+      title: !userS ? "No users Found" : userS.name,
+      userS,
+      blogs: userS.blogs,
+      flag: true,
+    });
+  else return next(new AppError("No user available!"));
 });
 
 exports.aboutMe = catchAsync(async (req, res, next) => {

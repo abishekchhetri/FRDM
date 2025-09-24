@@ -14,7 +14,13 @@ router.route("/resetPassword/:resetToken").get(viewHandler.resetPassword);
 router.route("/profile").get(authHandler.protect, viewHandler.aboutMe);
 router.route("/my-comments").get(authHandler.protect, viewHandler.myComments);
 router.route("/comments").get(authHandler.protect, viewHandler.comments);
-router.route("/user").get(authHandler.protect, viewHandler.getUser);
+router
+  .route("/user")
+  .get(
+    authHandler.protect,
+    authHandler.restrictTo("admin"),
+    viewHandler.getUser
+  );
 router.route("/about").get(authHandler.protect, viewHandler.aboutMe);
 router
   .route("/update-blog/:id")

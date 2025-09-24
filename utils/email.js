@@ -40,6 +40,7 @@ class Email {
           url: this.url,
           firstname: this.firstname,
           subject: this.subject,
+          message,
         }
       );
 
@@ -64,6 +65,10 @@ class Email {
     } catch (err) {
       console.log(err);
     }
+  }
+
+  async sendUploadContent(template, message, subject) {
+    await this.sendMail(template, message, subject);
   }
 }
 

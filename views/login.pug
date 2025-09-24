@@ -2,17 +2,37 @@ extends base
 block content
   .login-container
     .login-card
-      h2 Login
+      if(flag)
+        h2 Create an account
+      else 
+        h2 Login       
+
+      label(for="email") Name
+      input#name(type="email" placeholder="Enter your email" required)
+
       label(for="email") Email
       input#email(type="email" placeholder="Enter your email" required)
       
       label(for="password") Password
       input#password(type="password" placeholder="Enter your password" required)
       
-      button#loginBtn.btn Login
-      p.signup-text
-        | Don't have an account? 
-        a(href="/signup") Signup
-      p.signup-text
-        | Forgot password? 
-        a(href="/forgot-password") reset password link
+      if(flag)
+        label(for="password") Password Confirm
+        input#passwordConfirm(type="password" placeholder="Rnter your password" required)
+      
+      if(flag)
+        button#signupBtn.btn Sign up
+        p.signup-text
+          | You will recieve an email for confirmation if that is you, therefore use valid email 
+          | if you have account login? 
+          br
+          a(href="/login") login
+
+      else 
+        button#loginBtn.btn Login
+        p.signup-text
+          | Don't have an account? 
+          a(href="/signup") Signup
+        p.signup-text
+          | Forgot password? 
+          a(href="/forgot-password") reset password link
