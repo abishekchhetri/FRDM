@@ -2,6 +2,7 @@ const Comment = require("../models/comment");
 const User = require("../models/user");
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
+const { user } = require("./userController");
 
 exports.showAllComments = catchAsync(async (req, res, next) => {
   const comments = await Comment.find();
@@ -44,11 +45,28 @@ exports.showOneComment = catchAsync(async (req, res, next) => {
 });
 
 exports.deleteComment = catchAsync(async (req, res, next) => {
-  await Comment.findByIdAndDelete(req.params.id);
-  res.status(200).json({
-    status: "success",
-    message: "comment was deleted!",
-  });
+  if (req.user.role === "admin") {
+    await Comment.findByIdAndDelete(req.params.id);
+    res.status(200).json({
+      status: "success",
+      message: "comment was deleted!",
+    });
+  } else {
+    const comments = await Comment.findOne({
+      $and: [{ user: req.user.id }, { _id: req.params.id }],
+    });
+
+    if (!comments || comments.length < 1)
+      return next(new AppError("you can delete only your comment!", 401));
+    console.log("im here", comments.id);
+
+    await Comment.findByIdAndDelete(comments.id);
+
+    res.status(200).json({
+      status: "success",
+      message: "you are not an admin so you cannot delete",
+    });
+  }
 });
 
 //delete comment of specific user

@@ -15,10 +15,9 @@ router
 
 router.route("/:blogId").post(commentHandler.postComment);
 
-router.use(authHandler.restrictTo("admin"));
 router
   .route("/:id")
-  .get(commentHandler.showOneComment)
+  .get(authHandler.restrictTo("admin"), commentHandler.showOneComment)
   .delete(commentHandler.deleteComment);
 
 module.exports = router;

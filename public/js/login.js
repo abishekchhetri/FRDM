@@ -93,7 +93,6 @@ export const postaRecipe = async (obj) => {
 
 export const postaBlog = async (obj) => {
   try {
-    console.log(obj);
     await axios.post(`/api/v1/blogs`, obj);
     location.assign("/");
     alert("Blog has been posted successfully!");

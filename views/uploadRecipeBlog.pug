@@ -1,58 +1,56 @@
 extends sidebar
 
 block mainContent
+  - const isBlog = blog?.type === 'blog'
+  - const isRecipe = blog?.type === 'recipe'
+  - const boolRecipe = !(isBlog || isRecipe) || isRecipe
+  - const boolBlog = !(isBlog || isRecipe) || isBlog
+  - const isNew = !(isBlog || isRecipe)
+  - const pageTitle = isNew ? 'Upload Blog & Recipe' : `Update ${blog.type}`
+  - const blogButtonText = isBlog ? 'Update blog' : 'Post blog'
+  - const recipeButtonText = isRecipe ? 'Update Recipe' : 'Post recipe'
+
   section.section-container
-    -const isBlog = blog?.type==='blog'
-    -const isRecipe = blog?.type==='recipe'
-    -const boolRecipe = !(isRecipe||isBlog)||isRecipe
-    -const boolBlog = !(isRecipe||isBlog)||isBlog 
-    -const bool = !(isRecipe||isBlog)
-    -const mm = bool?'Upload Blog & Recipe':`Update ${blog.type}`
-    h2.section-title #{mm}
+    h2.section-title #{pageTitle}
 
     // Blog Section
-    if(boolBlog)
+    if boolBlog
       .blog-section
         h3 Blog
         .field
           label Title:
-          input#blogTitle(type="text" placeholder="Enter blog title" value=`${isBlog?blog.title:''}`)
+          input#blogTitle(type="text" placeholder="Enter blog title" value= isBlog ? blog.title : '')
         .field
           label Photo:
-          input#blogPhoto(type="text" placeholder="Enter image link" value=`${isBlog?blog.photo:''}`)
+          input#blogPhoto(type="text" placeholder="Enter image link" value= isBlog ? blog.photo : '')
         .field
           label Description:
-          textarea#blogDescription(placeholder="Enter blog description") #{isBlog?blog.description:''}
-          -const bp = isBlog?'Update blog':'Post blog'
-        button(data-id = `${isBlog?blog.id:''}` class=`${bool?'postBlog':'updateBlog'}` ) #{bp}
+          textarea#blogDescription(placeholder="Enter blog description") #{isBlog ? blog.description : ''}
+        button(data-id= isBlog ? blog.id : '' class= isNew ? 'postBlog' : 'updateBlog') #{blogButtonText}
 
     // Recipe Section
-    //- -const bool = !(isBlog||isRecipe)
-    if(boolRecipe)
+    if boolRecipe
       .recipe-section
         h3 Recipe
         .field
           label Title:
-          input#recipeTitle(type="text" placeholder="Enter recipe title" value=`${isRecipe?blog.title:''}`)
+          input#recipeTitle(type="text" placeholder="Enter recipe title" value= isRecipe ? blog.title : '')
         .field
           label Photo:
-          input#recipePhoto(type="text" placeholder="Enter recipe photo" value=`${isRecipe?blog.photo:''}`)
+          input#recipePhoto(type="text" placeholder="Enter recipe photo" value= isRecipe ? blog.photo : '')
         .field
           label Description:
-          -const rd = `${isRecipe?blog.description:''}`
-          textarea#recipeDescription(placeholder="Enter recipe description" value=`${isRecipe?blog.description:''}`) #{rd}
+          textarea#recipeDescription(placeholder="Enter recipe description") #{isRecipe ? blog.description : ''}
         .field
           label How to Cook:
-          -const htc = `${isRecipe?blog.howToCook:''}`
-          textarea#howToCook(placeholder="Steps to cook..." value=`${isRecipe?blog.howToCook:''}`) #{htc}
+          textarea#howToCook(placeholder="Steps to cook...") #{isRecipe ? blog.howToCook : ''}
         .field
           label Ingredients:
-          input#ingredients(type="text" placeholder="apple, 2 cups sugar, ..." value=`${isRecipe?blog.ingredients:''}`)
+          input#ingredients(type="text" placeholder="apple, 2 cups sugar, ..." value= isRecipe ? blog.ingredients : '')
         .field
           label Time:
-          input#time(type="text" placeholder="30 minutes" value=`${isRecipe?blog.time:''}`)
+          input#time(type="text" placeholder="30 minutes" value= isRecipe ? blog.time : '')
         .field
           label Calories:
-          -const ip = isRecipe?'update Recipe':'Post recipe'
-          input#calories(type="text" placeholder="450 kcal" value=`${isRecipe?blog.calories:''}`)
-        button(data-id = `${isRecipe?blog.id:''}` class=`${bool?'postRecipe':'updateRecipe'}` ) #{ip}
+          input#calories(type="text" placeholder="450 kcal" value= isRecipe ? blog.calories : '')
+        button(data-id= isRecipe ? blog.id : '' class= isNew ? 'postRecipe' : 'updateRecipe') #{recipeButtonText}

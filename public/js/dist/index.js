@@ -772,7 +772,7 @@ if (searchBtn) searchBtn.addEventListener("click", async ()=>{
     (0, _loginJs.searchUser)(field);
 });
 if (postBlog) postBlog.addEventListener("click", async ()=>{
-    postBlog.textContent = "Upload";
+    postBlog.textContent = "Uploading...";
     const title = document.querySelector("#blogTitle").value;
     const photo = document.querySelector("#blogPhoto").value;
     const description = document.querySelector("#blogDescription").value;
@@ -805,7 +805,7 @@ if (postRecipe) postRecipe.addEventListener("click", async ()=>{
         type: "recipe"
     };
     await (0, _loginJs.postaRecipe)(obj);
-    postRecipe.textContent = "Upload";
+    postRecipe.textContent = "Upload Recipe";
 });
 if (deleteComment) deleteComment.addEventListener("click", async (e)=>{
     if (!e.target.classList.contains("delete-cmnt")) return;
@@ -981,7 +981,6 @@ const postaRecipe = async (obj)=>{
 };
 const postaBlog = async (obj)=>{
     try {
-        console.log(obj);
         await (0, _axiosDefault.default).post(`/api/v1/blogs`, obj);
         location.assign("/");
         alert("Blog has been posted successfully!");

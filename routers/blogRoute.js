@@ -16,7 +16,13 @@ router.use(authHandler.protect);
 router
   .route("/:id")
   .get(blogHandler.findSpecificBlog)
-  .delete(authHandler.restrictTo("admin"), blogHandler.deleteBlog)
-  .patch(authHandler.restrictTo("admin"), blogHandler.updateSpecificBlog);
+  .delete(
+    authHandler.restrictTo("admin", "collaborator"),
+    blogHandler.deleteBlog
+  )
+  .patch(
+    authHandler.restrictTo("admin", "collaborator"),
+    blogHandler.updateSpecificBlog
+  );
 
 module.exports = router;

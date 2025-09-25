@@ -79,7 +79,7 @@ if (searchBtn) {
 }
 if (postBlog) {
   postBlog.addEventListener("click", async () => {
-    postBlog.textContent = "Upload";
+    postBlog.textContent = "Uploading...";
     const title = document.querySelector("#blogTitle").value;
     const photo = document.querySelector("#blogPhoto").value;
     const description = document.querySelector("#blogDescription").value;
@@ -114,7 +114,7 @@ if (postRecipe)
       type: "recipe",
     };
     await postaRecipe(obj);
-    postRecipe.textContent = "Upload";
+    postRecipe.textContent = "Upload Recipe";
   });
 
 if (deleteComment)

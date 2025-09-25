@@ -1028,3 +1028,55 @@ button {
 button:hover {
   background: #218838;
 }
+
+/* header css  */
+/* Unique navbar links */
+.hdr-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.hdr-nav-links a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+
+.hdr-nav-links a:hover {
+  color: #5e3363;
+}
+
+/* Search bar container */
+.hdr-search {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 20px;
+}
+
+/* Search input */
+.hdr-search-input {
+  padding: 7px 12px;
+  border: 1px solid #bbb;
+  border-radius: 20px;
+  outline: none;
+  font-size: 14px;
+}
+
+/* Search button */
+.hdr-search-btn {
+  margin-bottom: 11px;
+  padding: 7px 14px;
+  border: none;
+  background-color: #1e293b;
+  color: white;
+  font-size: 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.hdr-search-btn:hover {
+  background-color: #45a049;
+}
