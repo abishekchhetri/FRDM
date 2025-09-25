@@ -69,6 +69,7 @@ const userSchema = mongoose.Schema(
 );
 
 userSchema.pre(/^find/, function (next) {
+  if (process.env.NODE_ENV === "development") return next();
   if (this.getOptions().disablePreFind) return next();
   this.find({ verified: { $ne: "no" } });
   next();

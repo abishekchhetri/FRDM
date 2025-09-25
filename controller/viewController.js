@@ -1,8 +1,8 @@
 const catchAsync = require("../utils/catchAsync");
 const User = require("../models/user");
-const disablePrefind = require("../models/user");
 const Blog = require("../models/blog");
 const AppError = require("../utils/appError");
+const Email = require("../utils/email");
 
 exports.getReviewOfBlog = catchAsync(async (req, res, next) => {
   const blog = await Blog.find();
@@ -73,14 +73,17 @@ exports.getUser = catchAsync(async (req, res, next) => {
     })
     .populate("blogs");
 
-  if (userS)
-    res.status(200).render("userDashboard", {
-      title: !userS ? "No users Found" : userS.name,
-      userS,
-      blogs: userS.blogs,
-      flag: true,
-    });
-  else return next(new AppError("No user available!"));
+  if (userS) {
+    if (userS.id === req.user.id)
+      res.redirect(`${req.protocol}://${req.get("host")}/profile`);
+    else
+      res.status(200).render("userDashboard", {
+        title: !userS ? "No users Found" : userS.name,
+        userS,
+        blogs: userS.blogs,
+        flag: true,
+      });
+  } else return next(new AppError("No user available!", 500));
 });
 
 exports.aboutMe = catchAsync(async (req, res, next) => {
@@ -127,4 +130,21 @@ exports.verifyMe = catchAsync(async (req, res, next) => {
       message:
         "this user is already verified or deleted due to verification time exceeding!",
     });
+});
+
+exports.warnViolation = catchAsync(async (req, res, next) => {
+  const user = await User.findById(req.params.id);
+  await new Email(
+    user,
+    `${req.protocol}://${req.get("host")}/`
+  ).sendUploadContent(
+    "normalMessage",
+    `Hello, you have recieved this email because you have violated rules of this site, reasons for violation: you either have uploaded inappropriate content or any comments, this is the last warning and if dont take any action on that, you will be deleted including all your blogs comments will be deleted so coorporate to make this site useful and safe for all users','Content violation`
+  );
+  res.status(200).redirect(`${req.protocol}://${req.get("host")}/`);
+});
+
+exports.promotion = catchAsync(async (req, res, next) => {
+  await User.findByIdAndUpdate(req.params.id, { role: "collaborator" });
+  res.status(200).redirect(`${req.protocol}://${req.get("host")}/`);
 });

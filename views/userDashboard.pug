@@ -16,11 +16,13 @@ block mainContent
 
         // Show buttons if role is admin
         -const isAdmin = userS.role==='admin'&&flag?true:false
-          .mb-4
-            button.btn-warning.me-2 Warn
-            button.btn-danger(data-id=`${userS.id}`) Delete
-
         -const isAdminCollab = userS.role==='admin'||userS.role==='collaborator'?true:false
+            if(flag)
+              a.btn.btn-warning.me-2(href=`/warn/${userS.id}`) Warn content violation!
+              button.btn-danger(data-id=`${userS.id}`) Delete
+              if(!isAdminCollab)
+                a.btn.btn-warning.me-2(href=`/promote/${userS.id}`) Promote as collaborator
+
         if(isAdminCollab)
           h5.mb-3 Uploaded Blogs / Recipes
           ul.list-group

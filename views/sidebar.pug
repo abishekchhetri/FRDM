@@ -5,10 +5,16 @@ block content
       //- h2.logo MyApp
       nav
         ul
+          -const bool = (user.role==='collaborator'||user.role==='admin')
+          -const boolA = (user.role==='admin')
           li: a(href="/about") My Account
           li: a(href="/my-comments") My Comments 
-          li: a(href="/post-recipe") Post Blog/Recipe
-          li: a(href="/comments") User management
+          li
+            if(bool)
+              a(href="/post-recipe") Post Blog/Recipe
+          li
+            if(boolA)
+              a(href="/user-management") User management
 
     // Main content
     main.content

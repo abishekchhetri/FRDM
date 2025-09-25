@@ -8,7 +8,7 @@ router
   .get(blogHandler.getAllBlog)
   .post(
     authHandler.protect,
-    authHandler.restrictTo("admin", "creator"),
+    authHandler.restrictTo("admin", "collaborator"),
     blogHandler.postBlog
   );
 
