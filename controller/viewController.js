@@ -5,7 +5,8 @@ const AppError = require("../utils/appError");
 const Email = require("../utils/email");
 
 exports.getReviewOfBlog = catchAsync(async (req, res, next) => {
-  const blog = await Blog.find();
+  const blog = await Blog.find(req.query).sort("-createdAt");
+  if (blog.length < 1) return next(new AppError("No results found!", 500));
   res.status(200).render("frontpageLanding", {
     title: "overview",
     blogs: blog,
@@ -14,6 +15,7 @@ exports.getReviewOfBlog = catchAsync(async (req, res, next) => {
 
 exports.getBlog = catchAsync(async (req, res, next) => {
   const { slug } = req.params;
+
   const blog = await Blog.findOne({ slug }).populate("comments");
   res.status(200).render("renderBlog", {
     title: slug,
@@ -147,4 +149,20 @@ exports.warnViolation = catchAsync(async (req, res, next) => {
 exports.promotion = catchAsync(async (req, res, next) => {
   await User.findByIdAndUpdate(req.params.id, { role: "collaborator" });
   res.status(200).redirect(`${req.protocol}://${req.get("host")}/`);
+});
+
+exports.showAllRecipes = catchAsync(async (req, res, next) => {
+  const blog = await Blog.find({ type: "recipe" });
+  res.status(200).render("frontpageLanding", {
+    title: "overview",
+    blogs: blog,
+  });
+});
+
+exports.showAllBlogs = catchAsync(async (req, res, next) => {
+  const blog = await Blog.find({ type: "blog" });
+  res.status(200).render("frontpageLanding", {
+    title: "overview",
+    blogs: blog,
+  });
 });

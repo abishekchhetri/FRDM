@@ -20,16 +20,17 @@ block content
             .recipe-info
               
               p
-                strong Time: 
+                strong Time  : 
                 | #{blog.time} minutes
               p
-                strong Calories: 
+                strong Calories  : 
                 | #{blog.calories} kcal
               p
-                strong Ingredients:
+                strong Ingredients  :
                 | #{blog.ingredients}
               p
-                strong How to Cook : 
+                strong How to Cook
+                br
                 | #{blog.howToCook}
 
 
@@ -48,3 +49,5 @@ block content
             .comment-body
               span.comment-user= comment.user.name
               p.comment-text= comment.comment
+    else 
+      p Login to see comments, upload and manage contents to become collaborator, this site priotizes security, so, dont worry your email will not ever be publicized feel free to explore, @Avishek Chhetri Team FRDM

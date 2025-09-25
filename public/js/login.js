@@ -144,3 +144,14 @@ export const deleteaUser = async (id) => {
     console.log(err);
   }
 };
+
+export const search = (text) => {
+  try {
+    window.location.href =
+      new URL(window.location.href).origin + "?title=" + text;
+
+    // location.assign(`?title=${text}`);
+  } catch (err) {
+    console.log(err);
+  }
+};

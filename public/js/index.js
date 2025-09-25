@@ -12,6 +12,7 @@ import {
   updateaBlog,
   deleteaUser,
   signup,
+  search,
 } from "./login.js";
 const loginBtn = document.getElementById("loginBtn");
 const logoutBth = document.querySelector(".logout-btn");
@@ -27,6 +28,7 @@ const updateBlog = document.querySelector(".updateBlog");
 const updateRecipe = document.querySelector(".updateRecipe");
 const btnDanger = document.querySelector(".btn-danger");
 const signUp = document.querySelector("#signupBtn");
+const hdrSearchBtn = document.querySelector(".hdr-search-btn");
 
 if (loginBtn) {
   loginBtn.addEventListener("click", (e) => {
@@ -198,5 +200,13 @@ if (signUp) {
     const obj = { name, email, passwordConfirm, password };
     await signup(obj);
     signUp.textContent = "Sign up";
+  });
+}
+
+if (hdrSearchBtn) {
+  hdrSearchBtn.addEventListener("click", () => {
+    const searchBar = document.querySelector(".hdr-search-input ").value;
+    search(searchBar);
+    searchBar.value = "";
   });
 }

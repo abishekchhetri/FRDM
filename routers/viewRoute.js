@@ -6,7 +6,7 @@ const router = express.Router();
 router.use(authHandler.isLoggedIn);
 
 router.route("/").get(viewHandler.getReviewOfBlog);
-router.route("/blog/:slug").get(authHandler.protect, viewHandler.getBlog);
+router.route("/blog/:slug").get(viewHandler.getBlog);
 router.route("/login").get(viewHandler.login);
 router.route("/signup").get(viewHandler.signup);
 router.route("/forgot-password").get(viewHandler.forgotPassword);
@@ -60,4 +60,7 @@ router
     viewHandler.promotion
   );
 router.route("/verifyMe/:id").get(authHandler.protect, viewHandler.verifyMe);
+
+router.route("/blogs").get(viewHandler.showAllBlogs);
+router.route("/recipes").get(viewHandler.showAllRecipes);
 module.exports = router;

@@ -5,7 +5,7 @@ const Comment = require("../models/comment");
 const Email = require("../utils/email");
 
 exports.getAllBlog = catchAsync(async (req, res, next) => {
-  const blogs = await Blog.find();
+  const blogs = await Blog.find(req.query);
   if (blogs.length < 1) next(new AppError("no blogs are there!"));
   res.status(200).json({
     status: "success",
@@ -14,6 +14,7 @@ exports.getAllBlog = catchAsync(async (req, res, next) => {
   });
 });
 
+//for production this has the email posting for the user
 exports.postBlog = catchAsync(async (req, res, next) => {
   req.body.uploadedBy = req.user.name;
   req.body.user = req.user;

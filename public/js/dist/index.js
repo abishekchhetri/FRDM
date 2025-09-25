@@ -729,6 +729,7 @@ const updateBlog = document.querySelector(".updateBlog");
 const updateRecipe = document.querySelector(".updateRecipe");
 const btnDanger = document.querySelector(".btn-danger");
 const signUp = document.querySelector("#signupBtn");
+const hdrSearchBtn = document.querySelector(".hdr-search-btn");
 if (loginBtn) loginBtn.addEventListener("click", (e)=>{
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
@@ -879,6 +880,11 @@ if (signUp) signUp.addEventListener("click", async ()=>{
     await (0, _loginJs.signup)(obj);
     signUp.textContent = "Sign up";
 });
+if (hdrSearchBtn) hdrSearchBtn.addEventListener("click", ()=>{
+    const searchBar = document.querySelector(".hdr-search-input ").value;
+    (0, _loginJs.search)(searchBar);
+    searchBar.value = "";
+});
 
 },{"./login.js":"7yHem"}],"7yHem":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -896,6 +902,7 @@ parcelHelpers.export(exports, "deleteaComment", ()=>deleteaComment);
 parcelHelpers.export(exports, "deleteaBlog", ()=>deleteaBlog);
 parcelHelpers.export(exports, "updateaBlog", ()=>updateaBlog);
 parcelHelpers.export(exports, "deleteaUser", ()=>deleteaUser);
+parcelHelpers.export(exports, "search", ()=>search);
 var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
 const signup = async (obj)=>{
@@ -1025,6 +1032,14 @@ const deleteaUser = async (id)=>{
         location.assign("/");
     } catch (err) {
         alert(err.response.data.message);
+        console.log(err);
+    }
+};
+const search = (text)=>{
+    try {
+        window.location.href = new URL(window.location.href).origin + "?title=" + text;
+    // location.assign(`?title=${text}`);
+    } catch (err) {
         console.log(err);
     }
 };

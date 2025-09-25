@@ -2,7 +2,8 @@ extends base
 block content
   section.content
     each blog in blogs
-      .blog-card
+      -const isRecipe = blog.type==='recipe'
+      .blog-card(style= isRecipe?'border-radius:28% 88% 10% 10% / 10% 38% 0% 0% ':'')
         img(
           alt="Blog Image" 
           src=`${blog.photo}`
@@ -10,6 +11,6 @@ block content
         .blog-content
           .blog-date=`${new Date(blog.createdAt).toISOString().substring(0, 10)}`
           .blog-uploaded by #{blog.uploadedBy}
-          .blog-title #{blog.title}
-          a.btn.read-more(href=`/blog/${blog.slug}`) Read More
+          .blog-title(style= isRecipe?'text-align:center':'') #{blog.title}
+          a.btn.read-more(href=`/blog/${blog.slug}` style= isRecipe?'background-color:orange':'') #{isRecipe?'See Recipe':'Read more'}
     
