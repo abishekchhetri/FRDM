@@ -11,6 +11,7 @@ import {
   deleteaBlog,
   updateaBlog,
   deleteaUser,
+  signup,
 } from "./login.js";
 const loginBtn = document.getElementById("loginBtn");
 const logoutBth = document.querySelector(".logout-btn");
@@ -187,12 +188,15 @@ if (btnDanger) {
 }
 
 if (signUp) {
-  signUp.addEventListener("click", () => {
+  signUp.addEventListener("click", async () => {
+    signUp.textContent = "Signing up...";
     const name = document.querySelector("#name").value;
     const email = document.querySelector("#email").value;
     const passwordConfirm = document.querySelector("#passwordConfirm").value;
     const password = document.querySelector("#password").value;
 
     const obj = { name, email, passwordConfirm, password };
+    await signup(obj);
+    signUp.textContent = "Sign up";
   });
 }

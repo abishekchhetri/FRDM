@@ -3,7 +3,9 @@ import axios from "axios";
 export const signup = async (obj) => {
   try {
     const val = await axios.post(`/api/v1/user/signup`, obj);
-    alert("Email has been sent to check email validity check your inbox");
+    alert(
+      "Email has been sent to check if your email is valid just check your inbox and CLICK THE URL TO VALIDATE YOURSELF SO YOU CAN LOGIN !"
+    );
     location.assign("/");
   } catch (err) {
     alert(err.response.data.message);

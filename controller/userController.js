@@ -10,6 +10,7 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
     path: "comments",
     select: "",
   });
+
   res.status(200).json({
     status: "success",
     users: user,

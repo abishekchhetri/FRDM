@@ -57,6 +57,10 @@ const userSchema = mongoose.Schema(
       type: "String",
       default: "no",
     },
+    verifiedDate: {
+      type: "Date",
+      default: undefined,
+    },
   },
   {
     toJSON: { virtuals: true },
@@ -65,6 +69,7 @@ const userSchema = mongoose.Schema(
 );
 
 userSchema.pre(/^find/, function (next) {
+  if (this.getOptions().disablePreFind) return next();
   this.find({ verified: { $ne: "no" } });
   next();
 });

@@ -864,7 +864,8 @@ if (btnDanger) btnDanger.addEventListener("click", async (e)=>{
     await (0, _loginJs.deleteaUser)(id);
     btnDanger.textContent = "Delete";
 });
-if (signUp) signUp.addEventListener("click", ()=>{
+if (signUp) signUp.addEventListener("click", async ()=>{
+    signUp.textContent = "Signing up...";
     const name = document.querySelector("#name").value;
     const email = document.querySelector("#email").value;
     const passwordConfirm = document.querySelector("#passwordConfirm").value;
@@ -875,6 +876,8 @@ if (signUp) signUp.addEventListener("click", ()=>{
         passwordConfirm,
         password
     };
+    await (0, _loginJs.signup)(obj);
+    signUp.textContent = "Sign up";
 });
 
 },{"./login.js":"7yHem"}],"7yHem":[function(require,module,exports,__globalThis) {
@@ -898,7 +901,7 @@ var _axiosDefault = parcelHelpers.interopDefault(_axios);
 const signup = async (obj)=>{
     try {
         const val = await (0, _axiosDefault.default).post(`/api/v1/user/signup`, obj);
-        alert("Email has been sent to check email validity check your inbox");
+        alert("Email has been sent to check if your email is valid just check your inbox and CLICK THE URL TO VALIDATE YOURSELF SO YOU CAN LOGIN !");
         location.assign("/");
     } catch (err) {
         alert(err.response.data.message);

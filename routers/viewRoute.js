@@ -29,4 +29,5 @@ router
   .route("/post-recipe")
   .get(authHandler.protect, viewHandler.uploadContent);
 
+router.route("/verifyMe/:id").get(viewHandler.verifyMe);
 module.exports = router;

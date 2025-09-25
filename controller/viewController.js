@@ -1,5 +1,6 @@
 const catchAsync = require("../utils/catchAsync");
 const User = require("../models/user");
+const disablePrefind = require("../models/user");
 const Blog = require("../models/blog");
 const AppError = require("../utils/appError");
 
@@ -110,4 +111,20 @@ exports.updateContent = catchAsync(async (req, res, next) => {
     blog,
     update: true,
   });
+});
+
+exports.verifyMe = catchAsync(async (req, res, next) => {
+  const user = await User.findByIdAndUpdate(req.params.id, {
+    verified: "yes",
+  }).setOptions({
+    disablePreFind: true,
+  });
+
+  if (user) res.redirect(`${req.protocol}://${req.get("host")}/login`);
+  else
+    res.status(401).json({
+      status: "fail",
+      message:
+        "this user is already verified or deleted due to verification time exceeding!",
+    });
 });
