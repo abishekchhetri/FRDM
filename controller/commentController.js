@@ -1,8 +1,6 @@
 const Comment = require("../models/comment");
-const User = require("../models/user");
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
-const { user } = require("./userController");
 
 exports.showAllComments = catchAsync(async (req, res, next) => {
   const comments = await Comment.find();

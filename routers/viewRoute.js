@@ -59,7 +59,7 @@ router
     authHandler.restrictTo("admin"),
     viewHandler.promotion
   );
-router.route("/verifyMe/:id").get(authHandler.protect, viewHandler.verifyMe);
+router.route("/verifyMe/:id").get(viewHandler.verifyMe);
 
 router.route("/blogs").get(viewHandler.showAllBlogs);
 router.route("/recipes").get(viewHandler.showAllRecipes);

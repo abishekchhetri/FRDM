@@ -1,13 +1,13 @@
 extends sidebar 
 block mainContent
   section.comments-section
-    h2 Comments
-    each comment in comments
-      .comment-card
-        .comment-header
-          span.blog-name #{comment.blog.title}
-          span.comment-date #{new Date(comment.createdAt).toLocaleDateString()}
-        .comment-body
-          p #{comment.comment}
-        .comment-actions
-          button.delete-btn.delete-cmnt(type="button" data-id=`${comment.id}`) Delete
+    h2 Comments 
+      each comment in comments
+        .comment-card
+          .comment-header
+            span.blog-name #{comment.blog.title}
+            span.comment-date #{new Date(comment.createdAt).toLocaleDateString()}
+          .comment-body
+            p #{comment.comment}
+          .comment-actions
+            button.delete-btn.delete-cmnt(type="button" data-id=`${comment.id}`) Delete

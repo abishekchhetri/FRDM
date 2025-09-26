@@ -2,7 +2,7 @@ nav.navbar
   .logo-title
     img(
       alt="Logo" 
-      src="/images/grape.png"
+      src="/images/image.png"
     )
     span Food Recipe & Diet Management
 
@@ -24,7 +24,7 @@ nav.navbar
         a.user-link(href="/profile")
           img.user-photo(
             alt="User Photo" 
-            src="/images/user.png"
+            src=`/images/${user.photo}`
           )
         span.username=user.name
         a.btn.logout-btn(href="/logout") Logout

@@ -5,14 +5,14 @@ block mainContent
       .card-body
         // User Info
         .d-flex.align-items-center.mb-3
-          img(src="https://via.placeholder.com/80" alt="User Photo").rounded-circle
+          img(src=`/images/${userS.photo}` alt="User Photo").rounded-circle
           .user-info
             h5.mb-1=userS.name
             small.text-muted Email : #{userS.email}
             br
-            small.text-muted Created At: #{userS.createdAt}
+            small.text-muted Created At : #{userS.createdAt}
             br
-            span.badge Role: #{userS.role}
+            span.badge Role : #{userS.role}
 
         // Show buttons if role is admin
         -const isAdmin = userS.role==='admin'&&flag?true:false

@@ -39,7 +39,6 @@ exports.postBlog = catchAsync(async (req, res, next) => {
 exports.deleteBlog = catchAsync(async (req, res, next) => {
   if (req.user.role === "admin") {
     const blogs = await Blog.findById(req.params.id).populate("comments");
-
     const a = await Promise.all(
       blogs.comments
         .map((val) => val.id)

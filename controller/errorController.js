@@ -52,6 +52,7 @@ const errorHandler = (error, req, res, next) => {
   err.statusCode = error.statusCode || 500;
   err.message = error.message || "Something went wrong";
   err.stack = error.stack || null;
+  err.isOperational = error.isOperational;
 
   if (process.env.NODE_ENV === "development") sendErrorDev(req, res, err);
   else sendErrorProd(req, res, err);

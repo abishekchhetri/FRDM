@@ -147,7 +147,10 @@ exports.warnViolation = catchAsync(async (req, res, next) => {
 });
 
 exports.promotion = catchAsync(async (req, res, next) => {
-  await User.findByIdAndUpdate(req.params.id, { role: "collaborator" });
+  await User.findByIdAndUpdate(req.params.id, {
+    role: "collaborator",
+    photo: "collaborator.png",
+  });
   res.status(200).redirect(`${req.protocol}://${req.get("host")}/`);
 });
 
