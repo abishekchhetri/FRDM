@@ -6,7 +6,7 @@
   "author": "Avishek Chhetri",
   "type": "commonjs",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "node server.js",
     "start:prod": "nodemon server.js --production",
     "start:parcel": "parcel watch public/js/index.js --dist-dir public/js/dist",
     "build:parcel": "parcel build public/js/index.js --dist-dir public/js/dist",
