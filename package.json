@@ -9,7 +9,7 @@
     "start": "nodemon server.js",
     "start:prod": "nodemon server.js --production",
     "start:parcel": "parcel watch public/js/index.js --dist-dir public/js/dist",
-    "build:parcel": "parcel build public/js/index.js --dist-dir public/js",
+    "build:parcel": "parcel build public/js/index.js --dist-dir public/js/dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
