@@ -45,7 +45,7 @@ block content
         //- Loop comments dynamically
         each comment in blog.comments
           .comment
-            img.comment-photo(src=comment.user.photo alt=comment.name)
+            img.comment-photo(src=`/images/${comment.user.photo}` alt=comment.name)
             .comment-body
               span.comment-user= comment.user.name
               p.comment-text= comment.comment
