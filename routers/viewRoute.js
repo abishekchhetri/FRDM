@@ -13,6 +13,7 @@ router.route("/forgot-password").get(viewHandler.forgotPassword);
 router.route("/resetPassword/:resetToken").get(viewHandler.resetPassword);
 
 router.route("/profile").get(authHandler.protect, viewHandler.aboutMe);
+router.route("/about").get(viewHandler.about);
 router.route("/my-comments").get(authHandler.protect, viewHandler.myComments);
 // comments route is for updating the user
 router
@@ -29,7 +30,7 @@ router
     authHandler.restrictTo("admin"),
     viewHandler.getUser
   );
-router.route("/about").get(authHandler.protect, viewHandler.aboutMe);
+router.route("/my-account").get(authHandler.protect, viewHandler.aboutMe);
 router
   .route("/update-blog/:id")
   .get(

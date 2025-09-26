@@ -105,7 +105,6 @@ exports.updateSpecificBlog = catchAsync(async (req, res, next) => {
           401
         )
       );
-    console.log(user);
 
     await Blog.findByIdAndUpdate(req.params.id, req.body, { new: true });
 

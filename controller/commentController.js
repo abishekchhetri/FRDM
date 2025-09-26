@@ -56,7 +56,6 @@ exports.deleteComment = catchAsync(async (req, res, next) => {
 
     if (!comments || comments.length < 1)
       return next(new AppError("you can delete only your comment!", 401));
-    console.log("im here", comments.id);
 
     await Comment.findByIdAndDelete(comments.id);
 

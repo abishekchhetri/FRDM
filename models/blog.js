@@ -4,7 +4,7 @@ const blogSchema = mongoose.Schema(
   {
     title: {
       type: "String",
-      maxLength: [30, "max length of a blog is exceeded!"],
+      maxLength: [200, "max length of a blog is exceeded!"],
       required: [true, "blog has a name"],
     },
     photo: {

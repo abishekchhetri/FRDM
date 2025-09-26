@@ -155,7 +155,7 @@ exports.promotion = catchAsync(async (req, res, next) => {
 });
 
 exports.showAllRecipes = catchAsync(async (req, res, next) => {
-  const blog = await Blog.find({ type: "recipe" });
+  const blog = await Blog.find({ type: "recipe" }).sort("-createdAt");
   res.status(200).render("frontpageLanding", {
     title: "overview",
     blogs: blog,
@@ -163,9 +163,15 @@ exports.showAllRecipes = catchAsync(async (req, res, next) => {
 });
 
 exports.showAllBlogs = catchAsync(async (req, res, next) => {
-  const blog = await Blog.find({ type: "blog" });
+  const blog = await Blog.find({ type: "blog" }).sort("-createdAt");
   res.status(200).render("frontpageLanding", {
     title: "overview",
     blogs: blog,
+  });
+});
+
+exports.about = catchAsync(async (req, res, next) => {
+  res.status(200).render("about", {
+    title: "about",
   });
 });

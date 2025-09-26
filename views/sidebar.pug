@@ -7,7 +7,7 @@ block content
         ul
           -const bool = (user.role==='collaborator'||user.role==='admin')
           -const boolA = (user.role==='admin')
-          li: a(href="/about") My Account
+          li: a(href="/my-account") My Account
           li: a(href="/my-comments") My Comments 
           li
             if(bool)
@@ -16,6 +16,7 @@ block content
             if(boolA)
               a(href="/user-management") User management
           li: a(href='https://foodrecipeanddiet.netlify.app/' target="blank") Diet management
+          li: a(href='/about' target="blank") About 
 
     // Main content
     main.content
