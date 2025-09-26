@@ -1,17 +1,20 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
+const validator = require("validator");
+const AppError = require("../utils/appError");
 const userSchema = mongoose.Schema(
   {
     name: {
       type: "String",
       required: [true, "cannot proceed without username"],
-      unique: true,
+      unique: [true, "this name already exists!"],
     },
     email: {
       type: "String",
+      validate: [validator.isEmail, "you have passed invalid email"],
       required: [true, "email is required"],
-      unique: [true, "cannot procees without email"],
+      unique: [true, "Same email exists! try other"],
     },
     createdAt: {
       type: "Date",
@@ -24,7 +27,7 @@ const userSchema = mongoose.Schema(
     password: {
       type: "String",
       required: [true, "password is required"],
-      min: [8, "password must be minimum 8 digits okay!"],
+      minlength: [8, "password must be minimum 8 digits okay!"],
     },
     passwordConfirm: {
       type: "String",
@@ -55,7 +58,7 @@ const userSchema = mongoose.Schema(
     },
     verified: {
       type: "String",
-      default: "no",
+      default: "yes", //because of some real production issues with free tier of render it wont let us use smtp
     },
     verifiedDate: {
       type: "Date",
@@ -68,6 +71,7 @@ const userSchema = mongoose.Schema(
   }
 );
 
+//this makes sure that the verified is disabled in production also
 userSchema.pre(/^find/, function (next) {
   if (process.env.NODE_ENV === "development") return next();
   if (this.getOptions().disablePreFind) return next();
@@ -88,6 +92,14 @@ userSchema.virtual("blogs", {
 //password encrypting before creating password in presave mongoose web hook
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
+  if (this.password.length < 8)
+    return next(
+      new AppError("Your password must be greater than 8 characters long!")
+    );
+  if (this.password != this.passwordConfirm)
+    return next(
+      new AppError("Your password and confirm password must be same!")
+    );
   this.password = await bcrypt.hash(this.password, 10);
   this.passwordConfirm = undefined;
 });

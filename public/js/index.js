@@ -196,7 +196,11 @@ if (signUp) {
     const email = document.querySelector("#email").value;
     const passwordConfirm = document.querySelector("#passwordConfirm").value;
     const password = document.querySelector("#password").value;
-
+    if (password.length < 8) {
+      signUp.textContent = "Sign up";
+      alert("password must be atleast 8 characters long");
+      return;
+    }
     const obj = { name, email, passwordConfirm, password };
     await signup(obj);
     signUp.textContent = "Sign up";

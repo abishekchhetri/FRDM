@@ -1,8 +1,11 @@
 FRDM backend SSR
 
-someone signups ====> default is user
+NOTE : email works for reset password, warning and content publishing but i didnt restricted the signup with email it was worth trying though the signup with login was worth it but publically hosting my site blocked smtp by default in the production render deployment.
 
-sign in
-(protect)restrict user---> show blogs, also POST comments
-(protect)restrict collaborator----> promotion from user, can request upload blogs and recipes  
-(protect)restrict admin ---> above all, approves collaborator's, (recipe, diet POST) and DELETE POST PATCH blogs, DELETE comment
+email has two environments: production and development
+production---> gmail smtp
+development===> mailtrap smtp
+
+if mailtrap dont work try using the other account for mailtrap hence, to make it work finally.
+
+//RENDER HOSTS THIS SITE AND WE GET UPDATED DATA IN MONDODB ATLAS SO IT IS COOL, AND FAST ALSO, SSR IS COOL HERE.

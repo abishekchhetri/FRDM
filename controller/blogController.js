@@ -19,15 +19,16 @@ exports.postBlog = catchAsync(async (req, res, next) => {
   req.body.uploadedBy = req.user.name;
   req.body.user = req.user;
   const blogs = await Blog.create(req.body);
-  if (process.env.NODE_ENV === "production")
-    await new Email(
-      req.user,
-      `${req.protocol}://${req.get("host")}/blog/${blogs.slug}`
-    ).sendUploadContent(
-      "normalMessage",
-      `You have just uploaded a ${blogs.type} named as ${blogs.title}, as a collaborator, if you have uploaded any thing wrong just delete otherwise you will violate our terms and policy and your account will be permanently deleted`,
-      `uploaded a ${blogs.type}`
-    );
+  //this is a cool functionality but smtp in hosting platform is sluggish so it is good to check
+  // if (process.env.NODE_ENV === "production")
+  //   await new Email(
+  //     req.user,
+  //     `${req.protocol}://${req.get("host")}/blog/${blogs.slug}`
+  //   ).sendUploadContent(
+  //     "normalMessage",
+  //     `You have just uploaded a ${blogs.type} named as ${blogs.title}, as a collaborator, if you have uploaded any thing wrong just delete otherwise you will violate our terms and policy and your account will be permanently deleted`,
+  //     `uploaded a ${blogs.type}`
+  //   );
 
   res.status(201).json({
     status: "success",
