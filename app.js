@@ -15,7 +15,7 @@ const path = require("path");
 const app = express();
 const apiLimiter = rateLimit({
   windowMs: 60 * 60 * 1000,
-  max: 300, //this is for the max limit available for a user
+  max: 3000, //this is for the max limit available for a user
   message: "Too many requests are being try again in 1 hrs",
 });
 app.use("*", apiLimiter); //for the entire api it is the limit
